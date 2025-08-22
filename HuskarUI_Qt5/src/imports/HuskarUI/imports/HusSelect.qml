@@ -5,26 +5,29 @@ import HuskarUI.Basic 1.0
 T.ComboBox {
     id: control
 
-    property bool animationEnabled: true
+    property bool animationEnabled: HusTheme.animationEnabled
+    readonly property bool active: hovered || activeFocus
     property int hoverCursorShape: Qt.PointingHandCursor
     property bool tooltipVisible: false
     property bool loading: false
-    property int defaulPopupMaxHeight: 240
+    property int defaultPopupMaxHeight: 240
     property color colorText: enabled ?
-                                  popup.visible ? HusTheme.HusSelect.colorTextActive :
-                                                  HusTheme.HusSelect.colorText : HusTheme.HusSelect.colorTextDisabled
+                                  popup.visible ? themeSource.colorTextActive :
+                                                  themeSource.colorText : themeSource.colorTextDisabled
     property color colorBorder: enabled ?
-                                    hovered ? HusTheme.HusSelect.colorBorderHover :
-                                              HusTheme.HusSelect.colorBorder : HusTheme.HusSelect.colorBorderDisabled
-    property color colorBg: enabled ? HusTheme.HusSelect.colorBg : HusTheme.HusSelect.colorBgDisabled
+                                    active ? themeSource.colorBorderHover :
+                                             themeSource.colorBorder : themeSource.colorBorderDisabled
+    property color colorBg: enabled ? themeSource.colorBg : themeSource.colorBgDisabled
 
-    property int radiusBg: 6
-    property int radiusPopupBg: 6
+    property int radiusBg: themeSource.radiusBg
+    property int radiusItemBg: themeSource.radiusItemBg
+    property int radiusPopupBg: themeSource.radiusPopupBg
     property string contentDescription: ''
+    property var themeSource: HusTheme.HusSelect
 
     property Component indicatorDelegate: HusIconText {
-        colorIcon: HusTheme.HusSelect.colorTextActive
-        iconSize: HusTheme.HusSelect.fontSize - 2
+        colorIcon: themeSource.colorTextActive
+        iconSize: themeSource.fontSize - 2
         iconSource: control.loading ? HusIcon.LoadingOutlined : HusIcon.DownOutlined
 
         NumberAnimation on rotation {
@@ -40,17 +43,18 @@ T.ComboBox {
     Behavior on colorBorder { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationFast } }
     Behavior on colorBg { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationFast } }
 
+    objectName: '__HusSelect__'
+    leftPadding: 4
     rightPadding: 8
-    topPadding: 5
-    bottomPadding: 5
+    topPadding: 4
+    bottomPadding: 4
     implicitWidth: implicitContentWidth + implicitIndicatorWidth + leftPadding + rightPadding
     implicitHeight: implicitContentHeight + topPadding + bottomPadding
     textRole: 'label'
     valueRole: 'value'
-    objectName: '__HusSelect__'
     font {
-        family: HusTheme.HusSelect.fontFamily
-        pixelSize: HusTheme.HusSelect.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     delegate: T.ItemDelegate { }
     indicator: Loader {
@@ -58,7 +62,9 @@ T.ComboBox {
         y: control.topPadding + (control.availableHeight - height) / 2
         sourceComponent: indicatorDelegate
     }
-    contentItem: Text {
+    contentItem: HusText {
+        topPadding: 1
+        bottomPadding: 1
         leftPadding: 8
         rightPadding: control.indicator.width + control.spacing
         text: control.displayText
@@ -77,24 +83,26 @@ T.ComboBox {
         id: __popup
         y: control.height + 2
         implicitWidth: control.width
-        implicitHeight: implicitContentHeight + topPadding + bottomPadding
+        implicitHeight: Math.min(control.defaultPopupMaxHeight, __popupListView.contentHeight) + topPadding + bottomPadding
         leftPadding: 4
         rightPadding: 4
         topPadding: 6
         bottomPadding: 6
+        animationEnabled: control.animationEnabled
+        radiusBg: control.themeSource.radiusPopupBg
+        colorBg: HusTheme.isDark ? control.themeSource.colorPopupBgDark : control.themeSource.colorPopupBg
         enter: Transition {
             NumberAnimation {
                 property: 'opacity'
                 from: 0.0
                 to: 1.0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.OutQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
             NumberAnimation {
                 property: 'height'
-                from: 0
                 to: __popup.implicitHeight
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.OutQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
         }
@@ -103,19 +111,19 @@ T.ComboBox {
                 property: 'opacity'
                 from: 1.0
                 to: 0.0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.InQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
             NumberAnimation {
                 property: 'height'
+                from: Math.min(control.defaultPopupMaxHeight, __popupListView.contentHeight) + topPadding + bottomPadding
                 to: 0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.InQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
         }
         contentItem: ListView {
             id: __popupListView
-            implicitHeight: Math.min(control.defaulPopupMaxHeight, contentHeight)
             clip: true
             model: control.popup.visible ? control.model : null
             currentIndex: control.highlightedIndex
@@ -131,29 +139,29 @@ T.ComboBox {
                 height: implicitContentHeight + topPadding + bottomPadding
                 leftPadding: 8
                 rightPadding: 8
-                topPadding: 4
-                bottomPadding: 4
+                topPadding: 5
+                bottomPadding: 5
                 enabled: model.enabled ?? true
-                contentItem: Text {
+                contentItem: HusText {
                     text: __popupDelegate.model[control.textRole]
-                    color: __popupDelegate.enabled ? HusTheme.HusSelect.colorItemText : HusTheme.HusSelect.colorItemTextDisabled;
+                    color: __popupDelegate.enabled ? control.themeSource.colorItemText : control.themeSource.colorItemTextDisabled;
                     font {
-                        family: HusTheme.HusSelect.fontFamily
-                        pixelSize: HusTheme.HusSelect.fontSize
+                        family: control.themeSource.fontFamily
+                        pixelSize: control.themeSource.fontSize
                         weight: highlighted ? Font.DemiBold : Font.Normal
                     }
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter
                 }
                 background: Rectangle {
-                    radius: 2
+                    radius: control.radiusItemBg
                     color: {
                         if (__popupDelegate.enabled)
-                            return highlighted ? HusTheme.HusSelect.colorItemBgActive :
-                                                 hovered ? HusTheme.HusSelect.colorItemBgHover :
-                                                           HusTheme.HusSelect.colorItemBg;
+                            return highlighted ? control.themeSource.colorItemBgActive :
+                                                 hovered ? control.themeSource.colorItemBgHover :
+                                                           control.themeSource.colorItemBg;
                         else
-                            return HusTheme.HusSelect.colorItemBgDisabled;
+                            return control.themeSource.colorItemBgDisabled;
                     }
 
                     Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationFast } }
@@ -176,15 +184,18 @@ T.ComboBox {
                     sourceComponent: HusToolTip {
                         arrowVisible: false
                         visible: __popupDelegate.hovered
+                        animationEnabled: control.animationEnabled
                         text: __popupDelegate.model[control.textRole]
                         position: HusToolTip.Position_Bottom
                     }
                 }
             }
-            T.ScrollBar.vertical: HusScrollBar { }
-
-            Behavior on height { enabled: control.animationEnabled; NumberAnimation { duration: HusTheme.Primary.durationFast } }
+            T.ScrollBar.vertical: HusScrollBar {
+                animationEnabled: control.animationEnabled
+            }
         }
+
+        Binding on height { value: __popup.implicitHeight }
     }
 
     HoverHandler {

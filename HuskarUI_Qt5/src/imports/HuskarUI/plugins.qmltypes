@@ -23,6 +23,7 @@ Module {
         Method { name: "getClipbordText"; type: "QString" }
         Method {
             name: "setClipbordText"
+            type: "bool"
             Parameter { name: "text"; type: "QString" }
         }
         Method {
@@ -33,7 +34,13 @@ Module {
         Method {
             name: "getWeekNumber"
             type: "int"
-            Parameter { name: "date"; type: "QDate" }
+            Parameter { name: "dateTime"; type: "QDateTime" }
+        }
+        Method {
+            name: "dateFromString"
+            type: "QDateTime"
+            Parameter { name: "dateTime"; type: "QString" }
+            Parameter { name: "format"; type: "QString" }
         }
     }
     Component {
@@ -2372,6 +2379,14 @@ Module {
             index: 37
             isReadonly: true
         }
+        Property {
+            name: "HusMultiSelect"
+            type: "QVariantMap"
+            read: "HusMultiSelect"
+            notify: "HusMultiSelectChanged"
+            index: 38
+            isReadonly: true
+        }
         Signal { name: "animationEnabledChanged" }
         Signal { name: "PrimaryChanged" }
         Signal { name: "HusButtonChanged" }
@@ -2407,6 +2422,7 @@ Module {
         Signal { name: "HusCarouselChanged" }
         Signal { name: "HusBreadcrumbChanged" }
         Signal { name: "HusImageChanged" }
+        Signal { name: "HusMultiSelectChanged" }
         Signal { name: "isDarkChanged" }
         Signal { name: "darkModeChanged" }
         Signal { name: "textRenderTypeChanged" }

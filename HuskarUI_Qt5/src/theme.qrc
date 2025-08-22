@@ -17,6 +17,7 @@
         <file>theme/HusInput.json</file>
         <file>theme/HusMenu.json</file>
         <file>theme/HusMessage.json</file>
+        <file>theme/HusMultiSelect.json</file>
         <file>theme/HusPagination.json</file>
         <file>theme/HusPopup.json</file>
         <file>theme/HusProgress.json</file>

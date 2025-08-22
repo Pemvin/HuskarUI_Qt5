@@ -75,6 +75,7 @@ HusWindow {
 
                 HusCopyableText {
                     id: codeEdit
+                    width: parent.width
                     readOnly: false
                     wrapMode: Text.WrapAnywhere
                 }

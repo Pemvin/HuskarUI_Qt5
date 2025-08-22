@@ -7,7 +7,7 @@ HusRectangle {
     id: control
 
     clip: true
-    color: HusTheme.Primary.colorBgBase
+    color: HusTheme.HusTableView.colorBg
     topLeftRadius : 6
     topRightRadius: 6
 
@@ -873,22 +873,6 @@ HusRectangle {
                 property alias cellData: __rootItem.display
                 property bool checked: false
 
-                Loader {
-                    active: control.rowGridVisible
-                    width: parent.width
-                    height: 1
-                    anchors.bottom: parent.bottom
-                    sourceComponent: Rectangle { color: control.colorGridLine }
-                }
-
-                Loader {
-                    active: control.columnGridVisible
-                    width: 1
-                    height: parent.height
-                    anchors.right: parent.right
-                    sourceComponent: Rectangle { color: control.colorGridLine }
-                }
-
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
@@ -948,6 +932,22 @@ HusRectangle {
                         property alias dataIndex: __rootItem.dataIndex
                         property alias filterInput: __rootItem.filterInput
                     }
+                }
+
+                Loader {
+                    active: control.rowGridVisible
+                    width: parent.width
+                    height: 1
+                    anchors.bottom: parent.bottom
+                    sourceComponent: Rectangle { color: control.colorGridLine }
+                }
+
+                Loader {
+                    active: control.columnGridVisible
+                    width: 1
+                    height: parent.height
+                    anchors.right: parent.right
+                    sourceComponent: Rectangle { color: control.colorGridLine }
                 }
             }
         }

@@ -32,8 +32,8 @@ HusInput {
     property Component labelBgDelegate: Rectangle {
         radius: HusTheme.HusAutoComplete.radiusLabelBg
         color: highlighted ? HusTheme.HusAutoComplete.colorItemBgActive :
-                             hovered ? HusTheme.HusAutoComplete.colorItemBgHover :
-                                       HusTheme.HusAutoComplete.colorItemBg;
+                             (hovered || selected) ? HusTheme.HusAutoComplete.colorItemBgHover :
+                                                     HusTheme.HusAutoComplete.colorItemBg;
 
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationMid } }
     }
@@ -62,7 +62,7 @@ HusInput {
     }
     onOptionsChanged: {
         __private.model = options;
-        __popupListView.currentIndex = -1;
+        __popupListView.currentIndex = __popupListView.selectIndex = -1;
         control.filter();
     }
     onFilterOptionChanged: {
@@ -77,10 +77,40 @@ HusInput {
             control.closePopup();
     }
 
+    Keys.onPressed: function(event) {
+        if (event.key === Qt.Key_Escape) {
+            control.closePopup();
+        } else if (event.key === Qt.Key_Up) {
+            control.openPopup();
+            if (__popupListView.selectIndex > 0) {
+                __popupListView.selectIndex -= 1;
+                __popupListView.positionViewAtIndex(__popupListView.selectIndex, ListView.Contain);
+            } else {
+                __popupListView.selectIndex = __popupListView.count - 1;
+                __popupListView.positionViewAtIndex(__popupListView.selectIndex, ListView.Contain);
+            }
+        } else if (event.key === Qt.Key_Down) {
+            control.openPopup();
+            __popupListView.selectIndex = (__popupListView.selectIndex + 1) % __popupListView.count;
+            __popupListView.positionViewAtIndex(__popupListView.selectIndex, ListView.Contain);
+        } else if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+            if (__popupListView.selectIndex != -1) {
+                const modelData = __private.model[__popupListView.selectIndex];
+                const textData = modelData[control.textRole];
+                const valueData = modelData[control.valueRole] ?? textData;
+                control.select(modelData);
+                control.text = valueData;
+                __popup.close();
+                control.filter();
+                __popupListView.currentIndex = __popupListView.selectIndex = 0;
+            }
+        }
+    }
+
     function clearInput() {
         control.clear();
         control.textEdited();
-        __popupListView.currentIndex = -1;
+        __popupListView.currentIndex = __popupListView.selectIndex = -1;
     }
 
     function openPopup() {
@@ -94,6 +124,7 @@ HusInput {
 
     function filter() {
         __private.model = options.filter(option => filterOption(text, option) === true);
+        __popupListView.currentIndex = __popupListView.selectIndex = -1;
     }
 
     Item {
@@ -135,14 +166,14 @@ HusInput {
                 property: 'opacity'
                 from: 0.0
                 to: 1.0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.OutQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
             NumberAnimation {
                 property: 'height'
                 from: 0
                 to: __popup.implicitHeight
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.OutQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
         }
@@ -151,18 +182,19 @@ HusInput {
                 property: 'opacity'
                 from: 1.0
                 to: 0.0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.InQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
             NumberAnimation {
                 property: 'height'
                 to: 0
-                easing.type: Easing.InOutQuad
+                easing.type: Easing.InQuad
                 duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
             }
         }
         contentItem: ListView {
             id: __popupListView
+            property int selectIndex: -1
             clip: true
             currentIndex: -1
             model: __private.model
@@ -176,6 +208,7 @@ HusInput {
 
                 property var textData: modelData[control.textRole]
                 property var valueData: modelData[control.valueRole] ?? textData
+                property bool selected: __popupListView.selectIndex == index
 
                 width: __popupListView.width
                 height: implicitContentHeight + topPadding + bottomPadding
@@ -198,14 +231,15 @@ HusInput {
                     property alias valueData: __popupDelegate.valueData
                     property alias modelData: __popupDelegate.modelData
                     property alias hovered: __popupDelegate.hovered
+                    property alias selected: __popupDelegate.selected
                     property alias highlighted: __popupDelegate.highlighted
                 }
                 onClicked: {
                     control.select(__popupDelegate.modelData);
                     control.text = __popupDelegate.valueData;
-                    __popupListView.currentIndex = index;
                     __popup.close();
                     control.filter();
+                    ListView.view.currentIndex = ListView.view.selectIndex = 0;
                 }
 
                 HoverHandler {

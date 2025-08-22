@@ -50,5 +50,6 @@
         <file>imports/HuskarUI/imports/HusInputNumber.qml</file>
         <file>imports/HuskarUI/imports/HusImage.qml</file>
         <file>imports/HuskarUI/imports/HusImagePreview.qml</file>
+        <file>imports/HuskarUI/imports/HusMultiSelect.qml</file>
     </qresource>
 </RCC>

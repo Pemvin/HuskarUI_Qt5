@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import HuskarUI.Basic 1.0
 
@@ -18,7 +17,7 @@ Flickable {
             desc: qsTr(`
 # HusAutoComplete 自动完成 \n
 输入框自动完成功能。\n
-* **继承自 { HusInput }**\n
+* **继承自 { [HusInput](internal://HusInput) }**\n
 \n<br/>
 \n### 支持的代理：\n
 - **labelDelegate: Component** 弹出框标签项代理，代理可访问属性：\n
@@ -26,12 +25,14 @@ Flickable {
   - \`parent.valueData: var\` {valueRole}对应的值数据\n
   - \`parent.modelData: var\` 选项模型数据\n
   - \`parent.hovered: bool\` 是否悬浮\n
+  - \`parent.selected: bool\` 是否选择\n
   - \`parent.highlighted: bool\` 是否高亮\n
 - **labelBgDelegate: Component** 弹出框标签项背景代理，代理可访问属性：\n
   - \`parent.textData: var\` {textRole}对应的文本数据\n
   - \`parent.valueData: var\` {valueRole}对应的值数据\n
   - \`parent.modelData: var\` 选项模型数据\n
   - \`parent.hovered: bool\` 是否悬浮\n
+  - \`parent.selected: bool\` 是否选择\n
   - \`parent.highlighted: bool\` 是否高亮\n
 \n<br/>
 \n### 支持的属性：\n
