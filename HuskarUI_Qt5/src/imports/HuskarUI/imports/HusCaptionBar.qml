@@ -36,9 +36,10 @@ Rectangle {
     property var topCallback: checked => { }
     property var minimizeCallback:
         () => {
-            if (targetWindow) targetWindow.showMinimized();
+            if (targetWindow) HusApi.setWindowState(targetWindow, Qt.WindowMinimized);
         }
-    property var maximizeCallback: () => {
+    property var maximizeCallback:
+        () => {
             if (!targetWindow) return;
 
             if (targetWindow.visibility === Window.Maximized) targetWindow.showNormal();
@@ -53,27 +54,23 @@ Rectangle {
         sourceSize.height: height
         mipmap: true
     }
-    property Component winTitleDelegate: Text {
+    property Component winTitleDelegate: HusText {
         text: winTitle
         color: winTitleColor
         font: winTitleFont
     }
-    property Component winButtonsDelegate: Row {
+    property Component winExtraButtonsDelegate: Row {
         Connections {
             target: control
             function onWindowAgentChanged() {
-                if (windowAgent) {
-                    windowAgent.setHitTestVisible(__themeButton, true);
-                    windowAgent.setHitTestVisible(__topButton, true);
-                    windowAgent.setSystemButton(HusWindowAgent.Minimize, __minimizeButton);
-                    windowAgent.setSystemButton(HusWindowAgent.Maximize, __maximizeButton);
-                    windowAgent.setSystemButton(HusWindowAgent.Close, __closeButton);
-                }
+                control.addInteractionItem(__themeButton);
+                control.addInteractionItem(__topButton);
             }
         }
 
         HusCaptionButton {
             id: __themeButton
+            height: parent.height
             visible: control.themeButtonVisible
             iconSource: HusTheme.isDark ? HusIcon.MoonOutlined : HusIcon.SunOutlined
             iconSize: 16
@@ -83,6 +80,7 @@ Rectangle {
 
         HusCaptionButton {
             id: __topButton
+            height: parent.height
             visible: control.topButtonVisible
             iconSource: HusIcon.PushpinOutlined
             iconSize: 16
@@ -90,9 +88,22 @@ Rectangle {
             contentDescription: qsTr('置顶')
             onClicked: control.topCallback(checked);
         }
+    }
+    property Component winButtonsDelegate: Row {
+        Connections {
+            target: control
+            function onWindowAgentChanged() {
+                if (windowAgent) {
+                    windowAgent.setSystemButton(HusWindowAgent.Minimize, __minimizeButton);
+                    windowAgent.setSystemButton(HusWindowAgent.Maximize, __maximizeButton);
+                    windowAgent.setSystemButton(HusWindowAgent.Close, __closeButton);
+                }
+            }
+        }
 
         HusCaptionButton {
             id: __minimizeButton
+            height: parent.height
             visible: control.minimizeButtonVisible
             iconSource: HusIcon.LineOutlined
             iconSize: 14
@@ -102,16 +113,30 @@ Rectangle {
 
         HusCaptionButton {
             id: __maximizeButton
+            height: parent.height
             visible: control.maximizeButtonVisible
-            iconSource: targetWindow ? (targetWindow.visibility === Window.Maximized ?
-                                            HusIcon.SwitcherOutlined : HusIcon.BorderOutlined) : 0
-            iconSize: 14
+            topPadding: 8
+            bottomPadding: 8
+            contentItem: HusIconText {
+                iconSource: HusIcon.SwitcherTwotonePath3
+                iconSize: 14
+                colorIcon: __maximizeButton.colorIcon
+                visible: targetWindow
+
+                HusIconText {
+                    iconSource: HusIcon.SwitcherTwotonePath2
+                    iconSize: 14
+                    colorIcon: __maximizeButton.colorIcon
+                    visible: targetWindow.visibility === Window.Maximized
+                }
+            }
             contentDescription: qsTr('最大化')
             onClicked: control.maximizeCallback();
         }
 
         HusCaptionButton {
             id: __closeButton
+            height: parent.height
             visible: control.closeButtonVisible
             iconSource: HusIcon.CloseOutlined
             iconSize: 14
@@ -183,9 +208,14 @@ Rectangle {
         }
 
         Loader {
+            Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter
-            width: item ? item.width : 0
-            height: item ? item.height : 0
+            sourceComponent: winExtraButtonsDelegate
+        }
+
+        Loader {
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignVCenter
             sourceComponent: winButtonsDelegate
         }
     }

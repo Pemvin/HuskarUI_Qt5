@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
 import QtQuick.Templates 2.15 as T
 import HuskarUI.Basic 1.0
 
@@ -67,14 +66,11 @@ T.Drawer {
     parent: T.Overlay.overlay
     modal: true
     background: Item {
-        DropShadow {
+        HusShadow {
             anchors.fill: __rect
-            radius: 16
-            samples: 17
-            color: HusThemeFunctions.alpha(HusTheme.HusDrawer.colorShadow, HusTheme.isDark ? 0.1 : 0.2)
             source: __rect
+            shadowColor: HusTheme.HusDrawer.colorShadow
         }
-
         Rectangle {
             id: __rect
             anchors.fill: parent

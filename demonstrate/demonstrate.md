@@ -48,129 +48,125 @@
 
  <div align=center><img src="WaveProgress.gif" width="480" height="390" /></div>
 
- - DelMoveMouseArea / DelResizeMouseArea 给任意目标添加[移动/调整大小操作]的鼠标区域
+ - HusMoveMouseArea / HusResizeMouseArea 给任意目标添加[移动/调整大小操作]的鼠标区域
 
- <div align=center><img src="DelResizeMouseArea.gif" width="480" height="370" /></div>
+ <div align=center><img src="HusResizeMouseArea.gif" width="480" height="370" /></div>
 
-### 以下控件来自 [DelegateUI](https://github.com/mengps/DelegateUI)
-### 需要该部分控件文档请构建 [DelegateUI Gallery](https://github.com/mengps/DelegateUI)
+### 以下控件来自 [HusegateUI](https://github.com/mengps/HusegateUI)
+### 需要该部分控件文档请构建 [HusegateUI Gallery](https://github.com/mengps/HusegateUI)
 
- - DelAsyncHasher 可对任意数据(url/text/object)生成加密哈希的异步散列器
+ - HusAsyncHasher 可对任意数据(url/text/object)生成加密哈希的异步散列器
 
- <div align=center><img src="DelAsyncHasher.gif" width="480" height="400" /></div>
+ <div align=center><img src="HusAsyncHasher.gif" width="480" height="400" /></div>
  
- - DelRate 对某个事物进行评级
+ - HusRate 对某个事物进行评级
 
- <div align=center><img src="DelRate.gif" width="480" height="390" /></div>
+ <div align=center><img src="HusRate.gif" width="480" height="390" /></div>
 
- - DelSystemThemeHelper (Qt5/Qt6) 系统主题助手 `[Dark/Light]主题检测 & 感知`
+ - HusSystemThemeHelper (Qt5/Qt6) 系统主题助手 `[Dark/Light]主题检测 & 感知`
 
- <div align=center><img src="DelSystemThemeHelper.gif" width="640" height="300" /></div>
+ <div align=center><img src="HusSystemThemeHelper.gif" width="640" height="300" /></div>
 
- - DelWatermark 给页面的任意项加上水印
+ - HusWatermark 给页面的任意项加上水印
 
- <div align=center><img src="DelWatermark.gif" width="500" height="300" /></div>
+ <div align=center><img src="HusWatermark.gif" width="500" height="300" /></div>
 
-  - DelTour 用于分步引导用户了解产品功能的气泡组件。
+  - HusTour 用于分步引导用户了解产品功能的气泡组件。
 
- <div align=center><img src="DelTour.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusTour.gif" width="400" height="320" /></div>
 
-   - DelButton 按钮用于开始一个即时操作。
+   - HusButton 按钮用于开始一个即时操作。
 
- <div align=center><img src="DelButton.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusButton.gif" width="400" height="320" /></div>
 
-   - DelDivider 用于区隔内容的分割线。
+   - HusDivider 用于区隔内容的分割线。
 
- <div align=center><img src="DelDivider.png" width="400" height="320" /></div>
+ <div align=center><img src="HusDivider.png" width="400" height="320" /></div>
 
-   - DelSwitch 使用开关在两种状态之间切换。
+   - HusSwitch 使用开关在两种状态之间切换。
 
- <div align=center><img src="DelSwitch.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusSwitch.gif" width="400" height="320" /></div>
  
-   - DelAcrylic 亚克力/毛玻璃效果
+   - HusAcrylic 亚克力/毛玻璃效果
 
- <div align=center><img src="DelAcrylic.png" width="400" height="320" /></div>
+ <div align=center><img src="HusAcrylic.png" width="400" height="320" /></div>
 
-  - DelRoundRectangle 任意角都可以是圆角的矩形
+  - HusRectangle 任意角都可以是圆角的矩形
 
- <div align=center><img src="DelRoundRectangle.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusRectangle.gif" width="400" height="320" /></div>
  
-   - DelTabView 通过选项卡标签切换内容的组件。
+   - HusTabView 通过选项卡标签切换内容的组件。
 
- <div align=center><img src="DelTabView.gif" width="400" height="350" /></div>
+ <div align=center><img src="HusTabView.gif" width="400" height="350" /></div>
 
-   - DelRadio 用于在多个备选项中选中单个状态。
+   - HusRadio 用于在多个备选项中选中单个状态。
 
- <div align=center><img src="DelRadio.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusRadio.gif" width="400" height="320" /></div>
 
-   - DelRadioBlock(DelRadio 变体) 用于在多个备选项中选中单个状态。
+   - HusRadioBlock(HusRadio 变体) 用于在多个备选项中选中单个状态。
 
- <div align=center><img src="DelRadioBlock.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusRadioBlock.gif" width="400" height="320" /></div>
 
-   - DelCheckBox 收集用户的多项选择。
+   - HusCheckBox 收集用户的多项选择。
 
- <div align=center><img src="DelCheckBox.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusCheckBox.gif" width="400" height="320" /></div>
 
-   - DelInput 通过鼠标或键盘输入内容，是最基础的表单域的包装(即传统输入框)。
+   - HusInput 通过鼠标或键盘输入内容，是最基础的表单域的包装(即传统输入框)。
 
- <div align=center><img src="DelInput.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusInput.gif" width="400" height="320" /></div>
 
-   - DelOTPInput 用于接收和验证一次性口令的输入框组合，通常用于验证码或密码。
+   - HusOTPInput 用于接收和验证一次性口令的输入框组合，通常用于验证码或密码。
 
- <div align=center><img src="DelOTPInput.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusOTPInput.gif" width="400" height="320" /></div>
 
-   - DelSlider 滑动型输入器，展示当前值和可选范围。
+   - HusSlider 滑动型输入器，展示当前值和可选范围。
 
- <div align=center><img src="DelSlider.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusSlider.gif" width="400" height="320" /></div>
 
-   - DelScrollBar 滚动条是一个交互式栏，用于滚动某个区域或视图到特定位置。
+   - HusScrollBar 滚动条是一个交互式栏，用于滚动某个区域或视图到特定位置。
 
- <div align=center><img src="DelScrollBar.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusScrollBar.gif" width="400" height="320" /></div>
 
-   - DelTimePicker 输入或选择时间的控件。
+   - HusDrawer 屏幕边缘滑出的浮层面板。
 
- <div align=center><img src="DelTimePicker.gif" width="400" height="400" /></div>
+ <div align=center><img src="HusDrawer.gif" width="400" height="320" /></div>
 
-   - DelDrawer 屏幕边缘滑出的浮层面板。
+   - HusCollapse 可以折叠/展开的内容区域。
 
- <div align=center><img src="DelDrawer.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusCollapse.gif" width="400" height="320" /></div>
 
-   - DelCollapse 可以折叠/展开的内容区域。
+   - HusAvatar 用来代表用户或事物，支持图片、图标或字符展示。
 
- <div align=center><img src="DelCollapse.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusAvatar.png" width="400" height="320" /></div>
 
-   - DelAvatar 用来代表用户或事物，支持图片、图标或字符展示。
+   - HusCard 基础的卡片容器，可承载文字、列表、图片、段落，常用于后台概览页面。
 
- <div align=center><img src="DelAvatar.png" width="400" height="320" /></div>
+ <div align=center><img src="HusCard.png" width="400" height="320" /></div>
 
-   - DelCard 基础的卡片容器，可承载文字、列表、图片、段落，常用于后台概览页面。
+   - HusToolTip 简单的文字提示气泡框(替代基础ToolTip)。
 
- <div align=center><img src="DelCard.png" width="400" height="320" /></div>
+ <div align=center><img src="HusToolTip.gif" width="400" height="320" /></div>
 
-   - DelToolTip 简单的文字提示气泡框(替代基础ToolTip)。
+   - HusPopup 自带跟随主题切换的背景和阴影(替代基础Popup)。
 
- <div align=center><img src="DelToolTip.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusPopup.gif" width="400" height="320" /></div>
 
-   - DelPopup 自带跟随主题切换的背景和阴影(替代基础Popup)。
+   - HusSelect 下拉选择器(替代基础ComboBox)。
 
- <div align=center><img src="DelPopup.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusSelect.gif" width="400" height="320" /></div>
 
-   - DelSelect 下拉选择器(替代基础ComboBox)。
+   - HusPagination 分页器，用于分隔长列表，每次只加载一个页面。
 
- <div align=center><img src="DelSelect.gif" width="400" height="320" /></div>
-
-   - DelPagination 分页器，用于分隔长列表，每次只加载一个页面。
-
- <div align=center><img src="DelPagination.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusPagination.gif" width="400" height="320" /></div>
  
-   - DelTimeline 时间轴，可垂直展示的时间流信息。
+   - HusTimeline 时间轴，可垂直展示的时间流信息。
 
- <div align=center><img src="DelTimeline.gif" width="400" height="320" /></div>
+ <div align=center><img src="HusTimeline.gif" width="400" height="320" /></div>
 
-   - DelTag 标签，进行标记和分类的小标签。
+   - HusTag 标签，进行标记和分类的小标签。
 
- <div align=center><img src="DelTag.png" width="400" height="320" /></div>
+ <div align=center><img src="HusTag.png" width="400" height="320" /></div>
 
-   - DelTableView 表格，用于展示行列数据。
+   - HusTableView 表格，用于展示行列数据。
 
- <div align=center><img src="DelTableView.png" width="400" height="320" /></div>
+ <div align=center><img src="HusTableView.png" width="400" height="320" /></div>

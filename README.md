@@ -13,7 +13,11 @@ Qt Qml 的 Ant 设计组件库
 
 <div align=center>
 
-![win-badge] ![linux-badge] ![macos-badge] ![android-badge] [![Issues][issues-image]][issues-url] [![QQGroup][qqgroup-image]][qqgroup-url]
+![win-badge] ![linux-badge] ![macos-badge] ![android-badge]
+
+[![Issues][issues-open-image]][issues-open-url] [![Issues][issues-close-image]][issues-close-url] [![Release][release-image]][release-url]
+
+[![QQGroup][qqgroup-image]][qqgroup-url]
 
 English | [中文](./README-zh_CN.md)
 
@@ -24,12 +28,16 @@ English | [中文](./README-zh_CN.md)
 [macos-badge]: https://img.shields.io/badge/MacOS-passing-brightgreen?style=flat-square
 [android-badge]: https://img.shields.io/badge/Android-passing-brightgreen?style=flat-square
 
-[issues-image]: https://flat.badgen.net/github/label-issues/mengps/HuskarUI/open
-[issues-url]: https://github.com/mengps/HuskarUI/issues
+[issues-open-image]: https://img.shields.io/github/issues/mengps/HuskarUI_Qt5?label=Issue&style=flat-square
+[issues-open-url]: https://github.com/mengps/HuskarUI_Qt5/issues
+[issues-close-image]: https://img.shields.io/github/issues-closed/mengps/HuskarUI_Qt5?color=brightgreen&label=Issue&style=flat-square
+[issues-close-url]: https://github.com/mengps/HuskarUI_Qt5/issues?q=is%3Aissue%20state%3Aclosed
+
+[release-image]: https://img.shields.io/github/v/release/mengps/HuskarUI_Qt5?label=Release&style=flat-square
+[release-url]: https://github.com/mengps/HuskarUI_Qt5/releases
 
 [qqgroup-image]: https://img.shields.io/badge/QQGroup-490328047-f74658?style=flat-square
 [qqgroup-url]: https://qm.qq.com/q/cMNHn2tWeY
-
 
 ## 说明
 
@@ -101,7 +109,7 @@ English | [中文](./README-zh_CN.md)
  HusDivider | 用于区隔内容的分割线。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusDivider.png" width="250" height="210" /></div>
  HusSwitch | 使用开关在两种状态之间切换。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusSwitch.png" width="250" height="210" /></div>
  HusAcrylic | 亚克力/毛玻璃效果。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusAcrylic.png" width="250" height="210" /></div>
- HusRectangle | 任意角都可以是圆角的矩形。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusRoundRectangle.gif" width="250" height="210" /></div>
+ HusRectangle | 任意角都可以是圆角的矩形。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusRectangle.gif" width="250" height="210" /></div>
  HusTabView | 通过选项卡标签切换内容的组件。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusTabView.png" width="250" height="210" /></div>
  HusRadio | 用于在多个备选项中选中单个状态。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusRadio.png" width="250" height="200" /></div>
  HusRadioBlock | HusRadio 变体，用于在多个备选项中选中单个状态。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusRadioBlock.png" width="250" height="200" /></div>
@@ -110,7 +118,6 @@ English | [中文](./README-zh_CN.md)
  HusOTPInput | 用于接收和验证一次性口令的输入框组合，通常用于验证码或密码。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusOTPInput.gif" width="250" height="200" /></div>
  HusSlider | 滑动型输入器，展示当前值和可选范围。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusSlider.png" width="250" height="200" /></div>
  HusScrollBar | 滚动条是一个交互式栏，用于滚动某个区域或视图到特定位置。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusScrollBar.png" width="250" height="200" /></div>
- HusTimePicker | 输入或选择时间的控件。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusTimePicker.png" width="250" height="250" /></div>
  HusDrawer | 屏幕边缘滑出的浮层面板。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusDrawer.png" width="250" height="200" /></div>
  HusCollapse | 可以折叠/展开的内容区域。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusCollapse.png" width="250" height="200" /></div>
  HusAvatar | 用来代表用户或事物，支持图片、图标或字符展示。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusAvatar.png" width="250" height="200" /></div>
@@ -123,7 +130,10 @@ English | [中文](./README-zh_CN.md)
  HusTag | 标签，进行标记和分类的小标签。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusTag.png" width="250" height="200" /></div>
  HusTableView | 表格，用于展示行列数据。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusTableView.png" width="250" height="200" /></div>
  HusAutoComplete | 提供输入框自动完成功能。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusAutoComplete.png" width="250" height="200" /></div>
- HusDatePicker | 日期选择框，输入或选择日期的控件。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusDatePicker.png" width="250" height="200" /></div>
+ HusDateTimePicker | 日期事件选择框，输入或选择日期/时间的控件。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusDateTimePicker.png" width="250" height="200" /></div>
+ HusMultiSelect | 多选器，用于在多个备选项中选中多个状态。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusMultiSelect.png" width="250" height="200" /></div>
+ HusNotification | 通知提醒框，全局/页面内展示通知提醒信息。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusNotification.png" width="250" height="200" /></div>
+ HusPopconfirm | 气泡确认框，点击元素，弹出气泡式的确认框。 | `Qt5` `Qt6` | <div align=center><img src="./demonstrate/HusPopconfirm.png" width="250" height="200" /></div>
 
 
 ## 许可证

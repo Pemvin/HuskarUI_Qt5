@@ -109,6 +109,7 @@ Item {
                 initModel: __itemDelegate.menuItem
                 defaultMenuWidth: __itemDelegate.menu.width ?? control.defaultMenuWidth
                 closePolicy: HusPopup.NoAutoClose | HusPopup.CloseOnPressOutsideParent | HusPopup.CloseOnEscape
+                Component.onCompleted: HusApi.setPopupAllowAutoFlip(this);
                 onHoveredChanged: if (hovered) open();
                 onClickMenu: (deep, menuKey, menuData) => control.clickMenu(deep, menuKey, menuData);
                 property bool hovered: __hoverHandler.hovered

@@ -12,17 +12,18 @@ T.TextField {
 
     property bool animationEnabled: HusTheme.animationEnabled
     readonly property bool active: hovered || activeFocus
-    property int iconSource: 0
-    property int iconSize: HusTheme.HusInput.fontIconSize
+    property var iconSource: 0 || ''
+    property int iconSize: control.themeSource.fontIconSize
     property int iconPosition: HusInput.Position_Left
     property color colorIcon: colorText
-    property color colorText: enabled ? HusTheme.HusInput.colorText : HusTheme.HusInput.colorTextDisabled
+    property color colorText: enabled ? control.themeSource.colorText : control.themeSource.colorTextDisabled
     property color colorBorder: enabled ?
-                                    active ? HusTheme.HusInput.colorBorderHover :
-                                              HusTheme.HusInput.colorBorder : HusTheme.HusInput.colorBorderDisabled
-    property color colorBg: enabled ? HusTheme.HusInput.colorBg : HusTheme.HusInput.colorBgDisabled
-    property int radiusBg: HusTheme.HusInput.radiusBg
+                                    active ? control.themeSource.colorBorderHover :
+                                              control.themeSource.colorBorder : control.themeSource.colorBorderDisabled
+    property color colorBg: enabled ? control.themeSource.colorBg : control.themeSource.colorBgDisabled
+    property int radiusBg: control.themeSource.radiusBg
     property string contentDescription: ''
+    property var themeSource: HusTheme.HusInput
 
     property Component iconDelegate: HusIconText {
         iconSource: control.iconSource
@@ -33,18 +34,18 @@ T.TextField {
     objectName: '__HusInput__'
     focus: true
     padding: 6
-    leftPadding: 10 + ((iconSource != 0 && iconPosition == HusInput.Position_Left) ? iconSize : 0)
-    rightPadding: 10 + ((iconSource != 0 && iconPosition == HusInput.Position_Right) ? iconSize : 0)
+    leftPadding: 10 + (((iconSource !== 0 && iconSource !== '') && iconPosition == HusInput.Position_Left) ? iconSize : 0)
+    rightPadding: 10 + (((iconSource !== 0 && iconSource !== '') && iconPosition == HusInput.Position_Right) ? iconSize : 0)
     implicitWidth: contentWidth + leftPadding + rightPadding
     implicitHeight: contentHeight + topPadding + bottomPadding
     color: colorText
-    placeholderTextColor: enabled ? HusTheme.HusInput.colorPlaceholderText : HusTheme.HusInput.colorPlaceholderTextDisabled
-    selectedTextColor: HusTheme.HusInput.colorSelectedText
-    selectionColor: HusTheme.HusInput.colorSelection
+    placeholderTextColor: enabled ? control.themeSource.colorPlaceholderText : control.themeSource.colorPlaceholderTextDisabled
+    selectedTextColor: control.themeSource.colorTextSelected
+    selectionColor: control.themeSource.colorSelection
     selectByMouse: true
     font {
-        family: HusTheme.HusInput.fontFamily
-        pixelSize: HusTheme.HusInput.fontSize
+        family: control.themeSource.fontFamily
+        pixelSize: control.themeSource.fontSize
     }
     background: Rectangle {
         color: control.colorBg

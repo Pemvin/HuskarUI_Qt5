@@ -2,13 +2,19 @@
 
 #include <QtCore/QFile>
 #include <QtGui/QClipboard>
+#include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
+#include <QtGui/QWindow>
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+# include <QtQml/QQmlInfo>
 #endif
 
-#include <QtGui/QWindow>
+#include <private/qquickpopup_p_p.h>
+
+#ifdef Q_OS_WIN
+# include <Windows.h>
+#endif
 
 HusApi::~HusApi()
 {
@@ -39,6 +45,38 @@ void HusApi::setWindowStaysOnTopHint(QWindow *window, bool hint)
 #else
         window->setFlag(Qt::WindowStaysOnTopHint, hint);
 #endif
+    }
+}
+
+void HusApi::setWindowState(QWindow *window, int state)
+{
+    if (window) {
+#ifdef Q_OS_WIN
+        HWND hwnd = reinterpret_cast<HWND>(window->winId());
+        switch (state) {
+        case Qt::WindowMinimized:
+            ::ShowWindow(hwnd, SW_MINIMIZE);
+            break;
+        case Qt::WindowMaximized:
+            ::ShowWindow(hwnd, SW_MAXIMIZE);
+            break;
+        default:
+            window->setWindowState(Qt::WindowState(state));
+            break;
+        }
+#else
+        window->setWindowState(Qt::WindowState(state));
+#endif
+    }
+}
+
+void HusApi::setPopupAllowAutoFlip(QObject *popup, bool allowVerticalFlip, bool allowHorizontalFlip)
+{
+    if (auto p = qobject_cast<QQuickPopup*>(popup); p) {
+        QQuickPopupPrivate::get(p)->allowVerticalFlip = allowVerticalFlip;
+        QQuickPopupPrivate::get(p)->allowHorizontalFlip = allowHorizontalFlip;
+    } else {
+        qmlWarning(popup) << "Conversion to Popup failed!";
     }
 }
 
@@ -82,6 +120,11 @@ int HusApi::getWeekNumber(const QDateTime &dateTime) const
 QDateTime HusApi::dateFromString(const QString &dateTime, const QString &format) const
 {
     return QDateTime::fromString(dateTime, format);
+}
+
+void HusApi::openLocalUrl(const QString &local)
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(local));
 }
 
 HusApi::HusApi(QObject *parent)

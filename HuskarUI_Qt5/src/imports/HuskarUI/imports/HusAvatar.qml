@@ -11,7 +11,7 @@ Item {
     }
 
     property int size: 30
-    property int iconSource: 0
+    property var iconSource: 0 ?? ''
 
     property url imageSource: ''
     property bool imageMipmap: false
@@ -139,7 +139,7 @@ Item {
     Loader {
         id: __loader
         sourceComponent: {
-            if (control.iconSource != 0)
+            if (control.iconSource !== 0 && control.iconSource !== '')
                 return __iconImpl;
             else if (control.imageSource != '')
                 return __imageImpl;

@@ -308,6 +308,7 @@ HusRectangle {
                     }
                 }
             }
+            Component.onCompleted: HusApi.setPopupAllowAutoFlip(this);
         }
     }
 
@@ -353,7 +354,7 @@ HusRectangle {
     }
 
     function checkForKeys(keys) {
-        keys.forEach(key => __private.checkedKeysMap.set(object.key, true));
+        keys.forEach(key => __private.checkedKeysMap.set(key, true));
         __private.checkedKeysMapChanged();
     }
 

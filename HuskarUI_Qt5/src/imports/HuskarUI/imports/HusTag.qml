@@ -17,11 +17,14 @@ Rectangle {
     property bool animationEnabled: HusTheme.animationEnabled
     property int tagState: HusTag.State_Default
     property string text: ''
-    property font font
+    property font font: Qt.font({
+                                    family: HusTheme.HusTag.fontFamily,
+                                    pixelSize: HusTheme.HusTag.fontSize - 2
+                                })
     property bool rotating: false
-    property int iconSource: 0
+    property var iconSource: 0 ?? ''
     property int iconSize: HusTheme.HusButton.fontSize
-    property int closeIconSource: 0
+    property var closeIconSource: 0 ?? ''
     property int closeIconSize: HusTheme.HusButton.fontSize
     property alias spacing: __row.spacing
     property string presetColor: ''
@@ -33,10 +36,6 @@ Rectangle {
     objectName: '__HusTag__'
     implicitWidth: __row.implicitWidth + 16
     implicitHeight: Math.max(__icon.implicitHeight, __text.implicitHeight, __closeIcon.implicitHeight) + 8
-    font {
-        family: HusTheme.HusTag.fontFamily
-        pixelSize: HusTheme.HusTag.fontSize - 2
-    }
     color: colorBg
     border.color: colorBorder
     radius: HusTheme.HusTag.radiusBg

@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtGraphicalEffects 1.15
 import QtQuick.Templates 2.15 as T
 import HuskarUI.Basic 1.0
 
@@ -17,6 +16,7 @@ T.ToolTip {
     property bool animationEnabled: HusTheme.animationEnabled
     property bool arrowVisible: false
     property int position: HusToolTip.Position_Top
+    property color colorShadow: HusTheme.HusToolTip.colorShadow
     property color colorText: HusTheme.HusToolTip.colorText
     property color colorBg: HusTheme.isDark ? HusTheme.HusToolTip.colorBgDark : HusTheme.HusToolTip.colorBg
 
@@ -99,12 +99,10 @@ T.ToolTip {
         implicitWidth: __bg.width + (__private.isHorizontal ? 0 : __arrow.width)
         implicitHeight: __bg.height + (__private.isHorizontal ? __arrow.height : 0)
 
-        DropShadow {
+        HusShadow {
             anchors.fill: __item
-            radius: 16
-            samples: 17
-            color: HusThemeFunctions.alpha(control.colorText, HusTheme.isDark ? 0.1 : 0.2)
             source: __item
+            shadowColor: control.colorShadow
         }
 
         Item {
