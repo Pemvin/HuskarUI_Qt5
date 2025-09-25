@@ -134,7 +134,6 @@ jobs:
           windeployqt --qmldir=. `
             --plugindir=dist\plugins `
             --no-opengl-sw `
-            --no-widgets `
             --compiler-runtime `
             dist\${env:targetName}
           # 删除不必要的文件
