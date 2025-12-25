@@ -647,8 +647,8 @@ HusPopup {
                                     const step = wheel.angleDelta.y / 120 * control.scaleStep;
                                     const nextScale = __private.scale + step;
                                     __private.isCenterScale = false;
-                                    __private.scaleOriginX = wheel.x;
-                                    __private.scaleOriginY = wheel.y;
+                                    __private.scaleOriginX = point.position.x;
+                                    __private.scaleOriginY = point.position.y;
                                     if (nextScale < control.scaleMin) {
                                         __private.scale = control.scaleMin;
                                     } else if (nextScale > control.scaleMax) {

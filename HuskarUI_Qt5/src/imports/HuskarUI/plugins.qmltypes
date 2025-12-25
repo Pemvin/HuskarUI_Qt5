@@ -20,6 +20,28 @@ Module {
             Parameter { name: "window"; type: "QWindow"; isPointer: true }
             Parameter { name: "hint"; type: "bool" }
         }
+        Method {
+            name: "setWindowState"
+            Parameter { name: "window"; type: "QWindow"; isPointer: true }
+            Parameter { name: "state"; type: "int" }
+        }
+        Method {
+            name: "setPopupAllowAutoFlip"
+            Parameter { name: "popup"; type: "QObject"; isPointer: true }
+            Parameter { name: "allowVerticalFlip"; type: "bool" }
+            Parameter { name: "allowHorizontalFlip"; type: "bool" }
+        }
+        Method {
+            name: "setPopupAllowAutoFlip"
+            isCloned: true
+            Parameter { name: "popup"; type: "QObject"; isPointer: true }
+            Parameter { name: "allowVerticalFlip"; type: "bool" }
+        }
+        Method {
+            name: "setPopupAllowAutoFlip"
+            isCloned: true
+            Parameter { name: "popup"; type: "QObject"; isPointer: true }
+        }
         Method { name: "getClipbordText"; type: "QString" }
         Method {
             name: "setClipbordText"
@@ -41,6 +63,10 @@ Module {
             type: "QDateTime"
             Parameter { name: "dateTime"; type: "QString" }
             Parameter { name: "format"; type: "QString" }
+        }
+        Method {
+            name: "openLocalUrl"
+            Parameter { name: "local"; type: "QString" }
         }
     }
     Component {
@@ -2252,19 +2278,11 @@ Module {
             isReadonly: true
         }
         Property {
-            name: "HusTimePicker"
-            type: "QVariantMap"
-            read: "HusTimePicker"
-            notify: "HusTimePickerChanged"
-            index: 22
-            isReadonly: true
-        }
-        Property {
             name: "HusDrawer"
             type: "QVariantMap"
             read: "HusDrawer"
             notify: "HusDrawerChanged"
-            index: 23
+            index: 22
             isReadonly: true
         }
         Property {
@@ -2272,7 +2290,7 @@ Module {
             type: "QVariantMap"
             read: "HusCollapse"
             notify: "HusCollapseChanged"
-            index: 24
+            index: 23
             isReadonly: true
         }
         Property {
@@ -2280,7 +2298,7 @@ Module {
             type: "QVariantMap"
             read: "HusCard"
             notify: "HusCardChanged"
-            index: 25
+            index: 24
             isReadonly: true
         }
         Property {
@@ -2288,7 +2306,7 @@ Module {
             type: "QVariantMap"
             read: "HusPagination"
             notify: "HusPaginationChanged"
-            index: 26
+            index: 25
             isReadonly: true
         }
         Property {
@@ -2296,7 +2314,7 @@ Module {
             type: "QVariantMap"
             read: "HusPopup"
             notify: "HusPopupChanged"
-            index: 27
+            index: 26
             isReadonly: true
         }
         Property {
@@ -2304,7 +2322,7 @@ Module {
             type: "QVariantMap"
             read: "HusTimeline"
             notify: "HusTimelineChanged"
-            index: 28
+            index: 27
             isReadonly: true
         }
         Property {
@@ -2312,7 +2330,7 @@ Module {
             type: "QVariantMap"
             read: "HusTag"
             notify: "HusTagChanged"
-            index: 29
+            index: 28
             isReadonly: true
         }
         Property {
@@ -2320,7 +2338,7 @@ Module {
             type: "QVariantMap"
             read: "HusTableView"
             notify: "HusTableViewChanged"
-            index: 30
+            index: 29
             isReadonly: true
         }
         Property {
@@ -2328,7 +2346,7 @@ Module {
             type: "QVariantMap"
             read: "HusMessage"
             notify: "HusMessageChanged"
-            index: 31
+            index: 30
             isReadonly: true
         }
         Property {
@@ -2336,15 +2354,7 @@ Module {
             type: "QVariantMap"
             read: "HusAutoComplete"
             notify: "HusAutoCompleteChanged"
-            index: 32
-            isReadonly: true
-        }
-        Property {
-            name: "HusDatePicker"
-            type: "QVariantMap"
-            read: "HusDatePicker"
-            notify: "HusDatePickerChanged"
-            index: 33
+            index: 31
             isReadonly: true
         }
         Property {
@@ -2352,7 +2362,7 @@ Module {
             type: "QVariantMap"
             read: "HusProgress"
             notify: "HusProgressChanged"
-            index: 34
+            index: 32
             isReadonly: true
         }
         Property {
@@ -2360,7 +2370,7 @@ Module {
             type: "QVariantMap"
             read: "HusCarousel"
             notify: "HusCarouselChanged"
-            index: 35
+            index: 33
             isReadonly: true
         }
         Property {
@@ -2368,7 +2378,7 @@ Module {
             type: "QVariantMap"
             read: "HusBreadcrumb"
             notify: "HusBreadcrumbChanged"
-            index: 36
+            index: 34
             isReadonly: true
         }
         Property {
@@ -2376,7 +2386,7 @@ Module {
             type: "QVariantMap"
             read: "HusImage"
             notify: "HusImageChanged"
-            index: 37
+            index: 35
             isReadonly: true
         }
         Property {
@@ -2384,7 +2394,31 @@ Module {
             type: "QVariantMap"
             read: "HusMultiSelect"
             notify: "HusMultiSelectChanged"
+            index: 36
+            isReadonly: true
+        }
+        Property {
+            name: "HusDateTimePicker"
+            type: "QVariantMap"
+            read: "HusDateTimePicker"
+            notify: "HusDateTimePickerChanged"
+            index: 37
+            isReadonly: true
+        }
+        Property {
+            name: "HusNotification"
+            type: "QVariantMap"
+            read: "HusNotification"
+            notify: "HusNotificationChanged"
             index: 38
+            isReadonly: true
+        }
+        Property {
+            name: "HusPopconfirm"
+            type: "QVariantMap"
+            read: "HusPopconfirm"
+            notify: "HusPopconfirmChanged"
+            index: 39
             isReadonly: true
         }
         Signal { name: "animationEnabledChanged" }
@@ -2406,7 +2440,6 @@ Module {
         Signal { name: "HusRateChanged" }
         Signal { name: "HusRadioChanged" }
         Signal { name: "HusCheckBoxChanged" }
-        Signal { name: "HusTimePickerChanged" }
         Signal { name: "HusDrawerChanged" }
         Signal { name: "HusCollapseChanged" }
         Signal { name: "HusCardChanged" }
@@ -2417,12 +2450,14 @@ Module {
         Signal { name: "HusTableViewChanged" }
         Signal { name: "HusMessageChanged" }
         Signal { name: "HusAutoCompleteChanged" }
-        Signal { name: "HusDatePickerChanged" }
         Signal { name: "HusProgressChanged" }
         Signal { name: "HusCarouselChanged" }
         Signal { name: "HusBreadcrumbChanged" }
         Signal { name: "HusImageChanged" }
         Signal { name: "HusMultiSelectChanged" }
+        Signal { name: "HusDateTimePickerChanged" }
+        Signal { name: "HusNotificationChanged" }
+        Signal { name: "HusPopconfirmChanged" }
         Signal { name: "isDarkChanged" }
         Signal { name: "darkModeChanged" }
         Signal { name: "textRenderTypeChanged" }

@@ -41,7 +41,7 @@ spacing | int | -1 | 每个面板间的间隔
 accordion | bool | false | 是否为手风琴
 activeKey | string丨list | ''丨[] | 当前激活的键(手风琴模式为string,否则为list)
 defaultActiveKey | list | [] | 初始激活的面板项 key 数组
-expandIcon | int | HusIcon.RightOutlined | 展开图标(来自 HusIcon)
+expandIcon | int丨string | HusIcon.RightOutlined | 展开图标(来自 HusIcon)或图标链接
 titleFont | font | - | 标题字体
 contentFont | font | - | 内容字体
 colorBg | color | - | 背景颜色
@@ -87,6 +87,7 @@ radiusBg | int | - | 背景圆角
 
         CodeBox {
             width: parent.width
+            async: false
             desc: qsTr(`
 通过 \`defaultActiveKey\` 属性设置默认激活(即展开)键，这个例子默认展开了第一个。\n
                        `)
@@ -150,6 +151,7 @@ radiusBg | int | - | 背景圆角
 
         CodeBox {
             width: parent.width
+            async: false
             descTitle: qsTr('手风琴')
             desc: qsTr(`
 通过 \`accordion\` 属性设置手风琴模式，始终只有一个面板处在激活状态。\n
@@ -214,6 +216,7 @@ radiusBg | int | - | 背景圆角
 
         CodeBox {
             width: parent.width
+            async: false
             desc: qsTr(`
 通过 \`contentDelegate\` 属性设置自定义内容代理，可以实现嵌套折叠面板。\n
                        `)
@@ -361,6 +364,7 @@ radiusBg | int | - | 背景圆角
 
         CodeBox {
             width: parent.width
+            async: false
             desc: qsTr(`
 通过 \`spacing\` 属性设置面板之间的间隔以分离各个面板。\n
                        `)
@@ -424,6 +428,7 @@ radiusBg | int | - | 背景圆角
 
         CodeBox {
             width: parent.width
+            async: false
             desc: qsTr(`
 通过 \`expandIcon\` 属性设置展开图标, 设置为 0 则不显示图标。\n
                        `)

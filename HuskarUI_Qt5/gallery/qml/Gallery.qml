@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Layouts 1.15
 import HuskarUI.Basic 1.0
 import Gallery 1.0
 
@@ -12,7 +13,9 @@ HusWindow {
     minimumWidth: 800
     minimumHeight: 600
     title: qsTr('HuskarUI Gallery')
-    followThemeSwitch: false
+    followThemeSwitch: true
+    captionBar.visible: Qt.platform.os === 'windows' || Qt.platform.os === 'linux' || Qt.platform.os === 'osx'
+    captionBar.height: captionBar.visible ? 30 : 0
     captionBar.color: HusTheme.Primary.colorFillTertiary
     captionBar.themeButtonVisible: true
     captionBar.topButtonVisible: true
@@ -32,46 +35,101 @@ HusWindow {
     captionBar.topCallback: (checked) => {
         HusApi.setWindowStaysOnTopHint(galleryWindow, checked);
     }
+    
+    // 保存自定义按钮的引用，以便后续管理
+    property var favoriteButton: null
+    property var settingsButton: null
+    property var customWidthButton: null
+    
+    // 保存自定义控件的引用
+    property var languageComboBox: null
+    
+    // 定义ComboBox组件
+    Component {
+        id: comboBoxComponent
+        HusSelect {
+            flat: true
+        }
+    }
+    
     Component.onCompleted: {
-        /*! 解析 Primary.tokens */
-        for (const token in HusTheme.Primary) {
-            primaryTokens.push({ label: `@${token}` });
-        }
-        /*! 解析 Component.tokens */
-        const indexFile = `:/HuskarUI/theme/Index.json`;
-        const indexObject = JSON.parse(HusApi.readFileToString(indexFile));
-        for (const source in indexObject.__component__) {
-            const __style__ = {};
-            const parseImport = (name) => {
-                const path = `:/HuskarUI/theme/${name}.json`;
-                const object = JSON.parse(HusApi.readFileToString(path));
-                if (object.hasOwnProperty('__init__')) {
-                    const imports = object.__init__.__import__;
-                    if (imports) {
-                        imports.forEach(i => parseImport(i));
+        // 添加语言选择ComboBox
+            languageComboBox = captionBar.addCustomWidget(
+                comboBoxComponent,        // component
+                {                         // properties
+                    model: [
+                        { value: 'zh', label: qsTr("中文") },
+                        { value: 'en', label: qsTr("English") },
+                        { value: 'ja', label: qsTr("日本語") }
+                    ],
+                    currentIndex: model.indexOfValue('en'),
+                    width: 100
+                },
+                {                         // options
+                    visible: true,
+                    width: 100
+                }
+            );
+            
+            // 连接activated信号
+            if (languageComboBox) {
+                languageComboBox.currentValueChanged.connect(function()  {
+                    console.log("当前语言值改变:", languageComboBox.currentValue);
+                    // 这里可以添加语言切换逻辑
+                    languageComboBox.focus = false; // 取消焦点，避免按键冲突
+                });
+            }
+        // 延迟执行，确保windowAgent已经设置完成
+        Qt.callLater(function() {
+            // 添加收藏按钮
+            favoriteButton = captionBar.addCustomButton(
+                HusIcon.StarOutlined,    // iconSource
+                16,                      // iconSize
+                qsTr('收藏'),            // contentDescription
+                function() {             // onClicked回调
+                    console.log("收藏按钮被点击");
+                    languageComboBox.currentIndex=languageComboBox.indexOfValue('ja'); // 示例：点击按钮切换语言
+                },
+                {                        // 可选属性
+                    visible: true
+                }
+            );
+            
+            // 添加设置按钮
+            settingsButton = captionBar.addCustomButton(
+                HusIcon.SettingOutlined,  // iconSource
+                16,                       // iconSize
+                qsTr('设置'),             // contentDescription
+                function() {              // onClicked回调
+                    console.log("设置按钮被点击");
+                    // 示例：动态切换收藏按钮的可见性
+                    if (favoriteButton) {
+                        favoriteButton.visible = !favoriteButton.visible;
                     }
+                },
+                {                         // 可选属性
+                    visible: true
                 }
-                const style = object.__style__;
-                for (const token in style) {
-                    __style__[token] = style[token];
+            );
+            
+            // 添加一个带文本的自定义宽度按钮
+            customWidthButton = captionBar.addCustomButton(
+                "",                      // iconSource - 空字符串表示不使用图标
+                16,                      // iconSize
+                qsTr('自定义按钮'),      // contentDescription
+                function() {             // onClicked回调
+                    console.log("自定义宽度按钮被点击");
+                },
+                {                        // 可选属性
+                    visible: true,
+                    width: 120           // 自定义宽度
                 }
-            }
-            parseImport(source);
-
-            const list = [];
-            for (const token in __style__) {
-                list.push({
-                              'tokenName': token,
-                              'tokenValue': {
-                                  'token': token,
-                                  'value': __style__[token],
-                                  'rawValue': __style__[token],
-                              },
-                              'tokenCalcValue': token,
-                          });
-            }
-            componentTokens[source] = list;
-        }
+            );
+            
+            
+            
+        });
+        
         if (Qt.platform.os === 'windows') {
             if (setSpecialEffect(HusWindow.Win_MicaAlt)) return;
             if (setSpecialEffect(HusWindow.Win_Mica)) return;
@@ -81,13 +139,41 @@ HusWindow {
             if (setSpecialEffect(HusWindow.Mac_BlurEffect)) return;
         }
     }
+    
+    // 示例：动态移除按钮的方法
+    function removeCustomButtonExample() {
+        if (settingsButton) {
+            captionBar.removeCustomButton(settingsButton);
+            settingsButton = null;
+        }
+    }
+    
+    // 示例：清空所有自定义按钮的方法
+    function clearAllCustomButtonsExample() {
+        captionBar.clearCustomButtons();
+        favoriteButton = null;
+        settingsButton = null;
+        customWidthButton = null;
+    }
+    
+    // 示例：移除自定义控件的方法
+    function removeCustomWidgetExample() {
+        if (languageComboBox) {
+            captionBar.removeCustomWidget(languageComboBox);
+            languageComboBox = null;
+        }
+    }
+    
+    // 示例：清空所有自定义控件的方法
+    function clearAllCustomWidgetsExample() {
+        captionBar.clearCustomWidgets();
+        languageComboBox = null;
+    }
     onWidthChanged: {
         galleryMenu.compactMode = width < 1100;
     }
 
-    property int themeIndex: 8
-    property var primaryTokens: []
-    property var componentTokens: new Object
+    property var galleryGlobal: Global { }
 
     Behavior on opacity { NumberAnimation { } }
 
@@ -171,6 +257,7 @@ HusWindow {
             radius: HusTheme.Primary.radiusPrimary
             color: hovered ? HusTheme.isDark ? '#10ffffff' : '#10000000' : 'transparent'
             visible: !galleryMenu.compactMode
+            clip: true
             property bool hovered: authorCardHover.hovered
 
             Behavior on height { NumberAnimation { duration: HusTheme.Primary.durationFast } }
@@ -247,28 +334,8 @@ HusWindow {
             placeholderText: qsTr('搜索组件')
             iconSource: length > 0 ? HusIcon.CloseCircleFilled : HusIcon.SearchOutlined
             colorBg: galleryMenu.compactMode ? HusTheme.HusInput.colorBg : 'transparent'
-            Component.onCompleted: {
-                let model = [];
-                for (let i = 0; i < galleryMenu.defaultModel.length; i++) {
-                    let item = galleryMenu.defaultModel[i];
-                    if (item && item.menuChildren) {
-                        for (let j = 0; j < item.menuChildren.length; j++) {
-                            let childItem = item.menuChildren[j];
-                            if (childItem && childItem.label) {
-                                model.push({
-                                               'key': childItem.key,
-                                               'value': childItem.key,
-                                               'label': childItem.label,
-                                               'state': childItem.state ?? '',
-                                           });
-                            }
-                        }
-                    }
-                }
-                model.sort((a, b) => a.key.localeCompare(b.key));
-                options = model;
-            }
-            filterOption: function(input, option){
+            options: galleryGlobal.options
+            filterOption: function(input, option) {
                 return option.label.toUpperCase().indexOf(input.toUpperCase()) !== -1;
             }
             onSelect: function(option) {
@@ -334,6 +401,7 @@ HusWindow {
             tooltipVisible: true
             defaultMenuWidth: 300
             defaultSelectedKey: ['HomePage']
+            initModel: galleryGlobal.menus
             menuLabelDelegate: Item {
                 property var model: parent.model
                 property var menuButton: parent.menuButton
@@ -387,388 +455,12 @@ HusWindow {
             onClickMenu: function(deep, key, data) {
                 console.debug('onClickMenu', deep, key, JSON.stringify(data));
                 if (data) {
+                    containerLoader.version = data.addVersion || data.updateVersion || '';
+                    containerLoader.desc = data.desc || '';
+                    containerLoader.tagState = data.state || '';
                     gallerySwitchEffect.switchToSource(data.source);
                 }
             }
-            Component.onCompleted: {
-                let list = [];
-                for (const item of defaultModel) {
-                    if (item && item.menuChildren) {
-                        let hasNew = false;
-                        let hasUpdate = false;
-                        item.menuChildren.sort((a, b) => a.key.localeCompare(b.key));
-                        item.menuChildren.forEach(
-                            object => {
-                                if (object.state) {
-                                    if (object.state === 'New') hasNew = true;
-                                    if (object.state === 'Update') hasUpdate = true;
-                                }
-                            });
-                        if (hasNew)
-                            item.badgeState = 'New';
-                        else
-                            item.badgeState = hasUpdate ? 'Update' : '';
-                    }
-                    list.push(item);
-                }
-                initModel = list;
-            }
-            property var defaultModel: [
-                {
-                    key: 'HomePage',
-                    label: qsTr('首页'),
-                    iconSource: HusIcon.HomeOutlined,
-                    source: './Home/HomePage.qml'
-                },
-                {
-                    type: 'divider'
-                },
-                {
-                    label: qsTr('通用'),
-                    iconSource: HusIcon.ProductOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusWindow',
-                            label: qsTr('HusWindow 无边框窗口'),
-                            source: './Examples/General/ExpWindow.qml',
-                            state: 'Update',
-                        },
-                        {
-                            key: 'HusButton',
-                            label: qsTr('HusButton 按钮'),
-                            source: './Examples/General/ExpButton.qml'
-                        },
-                        {
-                            key: 'HusIconButton',
-                            label: qsTr('HusIconButton 图标按钮'),
-                            source: './Examples/General/ExpIconButton.qml'
-                        },
-                        {
-                            key: 'HusCaptionButton',
-                            label: qsTr('HusCaptionButton 标题按钮'),
-                            source: './Examples/General/ExpCaptionButton.qml'
-                        },
-                        {
-                            key: 'HusIconText',
-                            label: qsTr('HusIconText 图标文本'),
-                            source: './Examples/General/ExpIconText.qml'
-                        },
-                        {
-                            key: 'HusCopyableText',
-                            label: qsTr('HusCopyableText 可复制文本'),
-                            source: './Examples/General/ExpCopyableText.qml'
-                        },
-                        {
-                            key: 'HusRectangle',
-                            label: qsTr('HusRectangle 圆角矩形'),
-                            source: './Examples/General/ExpRectangle.qml'
-                        },
-                        {
-                            key: 'HusPopup',
-                            label: qsTr('HusPopup 弹窗'),
-                            source: './Examples/General/ExpPopup.qml'
-                        },
-                        {
-                            key: 'HusText',
-                            label: qsTr('HusText 文本'),
-                            source: './Examples/General/ExpText.qml'
-                        },
-                        {
-                            key: 'HusButtonBlock',
-                            label: qsTr('HusButtonBlock 按钮块'),
-                            source: './Examples/General/ExpButtonBlock.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusMoveMouseArea',
-                            label: qsTr('HusMoveMouseArea 鼠标移动区域'),
-                            source: './Examples/General/ExpMoveMouseArea.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusResizeMouseArea',
-                            label: qsTr('HusResizeMouseArea 鼠标改变大小区域'),
-                            source: './Examples/General/ExpResizeMouseArea.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusCaptionBar',
-                            label: qsTr('HusCaptionBar 标题栏'),
-                            source: './Examples/General/ExpCaptionBar.qml',
-                            state: 'New',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('布局'),
-                    iconSource: HusIcon.BarsOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusDivider',
-                            label: qsTr('HusDivider 分割线'),
-                            source: './Examples/Layout/ExpDivider.qml'
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('导航'),
-                    iconSource: HusIcon.SendOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusMenu',
-                            label: qsTr('HusMenu 菜单'),
-                            source: './Examples/Navigation/ExpMenu.qml',
-                            state: 'Update',
-                        },
-                        {
-                            key: 'HusScrollBar',
-                            label: qsTr('HusScrollBar 滚动条'),
-                            source: './Examples/Navigation/ExpScrollBar.qml',
-                        },
-                        {
-                            key: 'HusPagination',
-                            label: qsTr('HusPagination 分页'),
-                            source: './Examples/Navigation/ExpPagination.qml',
-                        },
-                        {
-                            key: 'HusContextMenu',
-                            label: qsTr('HusContextMenu 上下文菜单'),
-                            source: './Examples/Navigation/ExpContextMenu.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusBreadcrumb',
-                            label: qsTr('HusBreadcrumb 面包屑'),
-                            source: './Examples/Navigation/ExpBreadcrumb.qml',
-                            state: 'New',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('数据录入'),
-                    iconSource: HusIcon.InsertRowBelowOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusSwitch',
-                            label: qsTr('HusSwitch 开关'),
-                            source: './Examples/DataEntry/ExpSwitch.qml',
-                        },
-                        {
-                            key: 'HusSlider',
-                            label: qsTr('HusSlider 滑动输入条'),
-                            source: './Examples/DataEntry/ExpSlider.qml',
-                        },
-                        {
-                            key: 'HusSelect',
-                            label: qsTr('HusSelect 选择器'),
-                            source: './Examples/DataEntry/ExpSelect.qml',
-                        },
-                        {
-                            key: 'HusInput',
-                            label: qsTr('HusInput 输入框'),
-                            source: './Examples/DataEntry/ExpInput.qml',
-                        },
-                        {
-                            key: 'HusOTPInput',
-                            label: qsTr('HusOTPInput 一次性口令输入框'),
-                            source: './Examples/DataEntry/ExpOTPInput.qml',
-                            state: 'Update',
-                        },
-                        {
-                            key: 'HusRate',
-                            label: qsTr('HusRate 评分'),
-                            source: './Examples/DataEntry/ExpRate.qml',
-                        },
-                        {
-                            key: 'HusRadio',
-                            label: qsTr('HusRadio 单选框'),
-                            source: './Examples/DataEntry/ExpRadio.qml',
-                        },
-                        {
-                            key: 'HusRadioBlock',
-                            label: qsTr('HusRadioBlock 单选块'),
-                            source: './Examples/DataEntry/ExpRadioBlock.qml',
-                        },
-                        {
-                            key: 'HusCheckBox',
-                            label: qsTr('HusCheckBox 多选框'),
-                            source: './Examples/DataEntry/ExpCheckBox.qml',
-                        },
-                        {
-                            key: 'HusTimePicker',
-                            label: qsTr('HusTimePicker 时间选择框'),
-                            source: './Examples/DataEntry/ExpTimePicker.qml',
-                        },
-                        {
-                            key: 'HusAutoComplete',
-                            label: qsTr('HusAutoComplete 自动完成'),
-                            source: './Examples/DataEntry/ExpAutoComplete.qml',
-                        },
-                        {
-                            key: 'HusDatePicker',
-                            label: qsTr('HusDatePicker 日期选择框'),
-                            source: './Examples/DataEntry/ExpDatePicker.qml',
-                        },
-                        {
-                            key: 'HusInputNumber',
-                            label: qsTr('HusInputNumber 数字输入框'),
-                            source: './Examples/DataEntry/ExpInputNumber.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusMultiSelect',
-                            label: qsTr('HusMultiSelect 多选器'),
-                            source: './Examples/DataEntry/ExpMultiSelect.qml',
-                            state: 'New',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('数据展示'),
-                    iconSource: HusIcon.FundProjectionScreenOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusToolTip',
-                            label: qsTr('HusToolTip 文字提示'),
-                            source: './Examples/DataDisplay/ExpToolTip.qml',
-                        },
-                        {
-                            key: 'HusTourFocus',
-                            label: qsTr('HusTourFocus 漫游焦点'),
-                            source: './Examples/DataDisplay/ExpTourFocus.qml',
-                        },
-                        {
-                            key: 'HusTourStep',
-                            label: qsTr('HusTourStep 漫游式引导'),
-                            source: './Examples/DataDisplay/ExpTourStep.qml',
-                        },
-                        {
-                            key: 'HusTabView',
-                            label: qsTr('HusTabView 标签页'),
-                            source: './Examples/DataDisplay/ExpTabView.qml',
-                        },
-                        {
-                            key: 'HusCollapse',
-                            label: qsTr('HusCollapse 折叠面板'),
-                            source: './Examples/DataDisplay/ExpCollapse.qml',
-                        },
-                        {
-                            key: 'HusAvatar',
-                            label: qsTr('HusAvatar 头像'),
-                            source: './Examples/DataDisplay/ExpAvatar.qml',
-                        },
-                        {
-                            key: 'HusCard',
-                            label: qsTr('HusCard 卡片'),
-                            source: './Examples/DataDisplay/ExpCard.qml',
-                        },
-                        {
-                            key: 'HusTimeline',
-                            label: qsTr('HusTimeline 时间轴'),
-                            source: './Examples/DataDisplay/ExpTimeline.qml',
-                        },
-                        {
-                            key: 'HusTag',
-                            label: qsTr('HusTag 标签'),
-                            source: './Examples/DataDisplay/ExpTag.qml',
-                        },
-                        {
-                            key: 'HusTableView',
-                            label: qsTr('HusTableView 表格'),
-                            source: './Examples/DataDisplay/ExpTableView.qml',
-                            state: 'Update',
-                        },
-                        {
-                            key: 'HusBadge',
-                            label: qsTr('HusBadge 徽标数'),
-                            source: './Examples/DataDisplay/ExpBadge.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusCarousel',
-                            label: qsTr('HusCarousel 走马灯'),
-                            source: './Examples/DataDisplay/ExpCarousel.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusImage',
-                            label: qsTr('HusImage 图片'),
-                            source: './Examples/DataDisplay/ExpImage.qml',
-                            state: 'New',
-                        },
-                        {
-                            key: 'HusImagePreview',
-                            label: qsTr('HusImagePreview 图片预览'),
-                            source: './Examples/DataDisplay/ExpImagePreview.qml',
-                            state: 'New',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('效果'),
-                    iconSource: HusIcon.FireOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusAcrylic',
-                            label: qsTr('HusAcrylic 亚克力效果'),
-                            source: './Examples/Effect/ExpAcrylic.qml',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('工具'),
-                    iconSource: HusIcon.ToolOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusAsyncHasher',
-                            label: qsTr('HusAsyncHasher 异步哈希器'),
-                            source: './Examples/Utils/ExpAsyncHasher.qml',
-                        }
-                    ]
-                },
-                {
-                    label: qsTr('反馈'),
-                    iconSource: HusIcon.MessageOutlined,
-                    menuChildren: [
-                        {
-                            key: 'HusWatermark',
-                            label: qsTr('HusWatermark 水印'),
-                            source: './Examples/Feedback/ExpWatermark.qml',
-                        },
-                        {
-                            key: 'HusDrawer',
-                            label: qsTr('HusDrawer 抽屉'),
-                            source: './Examples/Feedback/ExpDrawer.qml',
-                        },
-                        {
-                            key: 'HusMessage',
-                            label: qsTr('HusMessage 消息提示'),
-                            source: './Examples/Feedback/ExpMessage.qml',
-                        },
-                        {
-                            key: 'HusProgress',
-                            label: qsTr('HusProgress 进度条'),
-                            source: './Examples/Feedback/ExpProgress.qml',
-                            state: 'New',
-                        }
-                    ]
-                },
-                {
-                    type: 'divider'
-                },
-                {
-                    label: qsTr('主题相关'),
-                    iconSource: HusIcon.SkinOutlined,
-                    type: 'group',
-                    menuChildren: [
-                        {
-                            key: 'HusTheme',
-                            label: qsTr('HusTheme 主题定制'),
-                            source: './Examples/Theme/ExpTheme.qml',
-                        }
-                    ]
-                }
-            ]
         }
 
         HusDivider {
@@ -872,6 +564,9 @@ HusWindow {
             Loader {
                 id: containerLoader
                 anchors.fill: parent
+                property string tagState: ''
+                property string version: ''
+                property string desc: ''
             }
         }
     }

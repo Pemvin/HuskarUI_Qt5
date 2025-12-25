@@ -28,11 +28,8 @@ HusWindow {
     Item {
         anchors.fill: parent
 
-        DropShadow {
+        HusShadow {
             anchors.fill: backRect
-            radius: 8.0
-            samples: 17
-            color: HusTheme.Primary.colorTextBase
             source: backRect
         }
 

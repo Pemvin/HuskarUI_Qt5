@@ -148,7 +148,14 @@ Item {
 
     objectName: '__HusInputNumber__'
     height: __row.implicitHeight
-    onValueChanged: __input.text = formatter(value);
+    property bool __isEditing: false
+    
+    // 只有在非编辑状态下才应用格式化，避免用户输入时被打断
+    onValueChanged: {
+        if (!__isEditing) {
+            __input.text = formatter(value);
+        }
+    }
     onPrefixChanged: valueChanged();
     onSuffixChanged: valueChanged();
     onCurrentAfterLabelChanged: valueChanged();
@@ -280,11 +287,21 @@ Item {
                 topRightRadius: control.afterLabel.length === 0 ? control.radiusBg : 0
                 bottomRightRadius: control.afterLabel.length === 0 ? control.radiusBg : 0
             }
+            onActiveFocusChanged: {
+                // 跟踪编辑状态
+                control.__isEditing = activeFocus;
+            }
+            
             onTextChanged: {
                 let v = control.parser(text);
                 if (v >= control.min && v <= control.max) control.value = v;
             }
-            onEditingFinished: control.valueChanged();
+            
+            onEditingFinished: {
+                control.__isEditing = false;
+                // 编辑完成后再应用格式化
+                __input.text = control.formatter(control.value);
+            }
 
             Keys.onUpPressed: if (control.enabled && control.useKeyboard) control.increase();
             Keys.onDownPressed: if (control.enabled && control.useKeyboard) control.decrease();

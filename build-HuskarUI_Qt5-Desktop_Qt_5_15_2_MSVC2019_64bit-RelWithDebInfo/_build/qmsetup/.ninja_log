@@ -1,0 +1,21 @@
+# ninja log v5
+160	1431	7804092662331930	src/syscmdline/CMakeFiles/syscmdline.dir/syscmdline_res.rc.res	acf43d7bf84da2c6
+77	1696	7804092664998520	src/syscmdline/CMakeFiles/syscmdline.dir/src/sharedbase.cpp.obj	bc7ef7bf3d3f7101
+974	2638	7804092673610007	src/corecmd/CMakeFiles/qmcorecmd.dir/sha-256.cpp.obj	5a24b5c1fb08f43e
+118	2991	7804092677678527	src/syscmdline/CMakeFiles/syscmdline.dir/src/symbol.cpp.obj	badfdd4154d0dd6c
+105	3100	7804092678904408	src/syscmdline/CMakeFiles/syscmdline.dir/src/utils.cpp.obj	a4f617eb38294504
+145	3526	7804092683187228	src/syscmdline/CMakeFiles/syscmdline.dir/src/value.cpp.obj	d88978d871077c6b
+2639	4132	7804092688472663	src/corecmd/CMakeFiles/qmcorecmd.dir/qmcorecmd_res.rc.res	8ec1f7cccb1f16d9
+15	4382	7804092690986114	src/syscmdline/CMakeFiles/syscmdline.dir/src/option.cpp.obj	fdc2730f080ee10b
+47	5082	7804092698785085	src/syscmdline/CMakeFiles/syscmdline.dir/src/helplayout.cpp.obj	be63b9d398bf2f0a
+132	5339	7804092701379524	src/syscmdline/CMakeFiles/syscmdline.dir/src/system.cpp.obj	fc31bcd5af31a1d4
+1	5613	7804092704152839	src/syscmdline/CMakeFiles/syscmdline.dir/src/argument.cpp.obj	f471433432629bf3
+91	5847	7804092706535871	src/syscmdline/CMakeFiles/syscmdline.dir/src/parser.cpp.obj	5d35f40653bf2b76
+31	5979	7804092707858397	src/syscmdline/CMakeFiles/syscmdline.dir/src/command.cpp.obj	b83a8f3c6bfe6322
+62	6341	7804092711484211	src/syscmdline/CMakeFiles/syscmdline.dir/src/parseresult.cpp.obj	61888852baeb260
+6342	6716	7804092715205965	lib/syscmdline.lib	b48fc3bd602ed424
+1697	6867	7804092716771261	src/corecmd/CMakeFiles/qmcorecmd.dir/utils.cpp.obj	66ab21d537c5f47f
+1434	8693	7804092734906774	src/corecmd/CMakeFiles/qmcorecmd.dir/utils_win.cpp.obj	8d47d84619a5f72c
+991	12079	7804092768747890	src/corecmd/CMakeFiles/qmcorecmd.dir/main.cpp.obj	119b4e752a813f1d
+12079	12574	7804092773693830	bin/qmcorecmd.exe	6392002d3d9ea778
+6	448	0	CMakeFiles/install.util	603a734a544dc25

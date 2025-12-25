@@ -12,7 +12,6 @@
         <file>imports/HuskarUI/imports/HusCheckBox.qml</file>
         <file>imports/HuskarUI/imports/HusCollapse.qml</file>
         <file>imports/HuskarUI/imports/HusCopyableText.qml</file>
-        <file>imports/HuskarUI/imports/HusDatePicker.qml</file>
         <file>imports/HuskarUI/imports/HusDivider.qml</file>
         <file>imports/HuskarUI/imports/HusDrawer.qml</file>
         <file>imports/HuskarUI/imports/HusIconButton.qml</file>
@@ -39,7 +38,6 @@
         <file>imports/HuskarUI/imports/HusTag.qml</file>
         <file>imports/HuskarUI/imports/HusText.qml</file>
         <file>imports/HuskarUI/imports/HusTimeline.qml</file>
-        <file>imports/HuskarUI/imports/HusTimePicker.qml</file>
         <file>imports/HuskarUI/imports/HusToolTip.qml</file>
         <file>imports/HuskarUI/imports/HusTourFocus.qml</file>
         <file>imports/HuskarUI/imports/HusTourStep.qml</file>
@@ -51,5 +49,8 @@
         <file>imports/HuskarUI/imports/HusImage.qml</file>
         <file>imports/HuskarUI/imports/HusImagePreview.qml</file>
         <file>imports/HuskarUI/imports/HusMultiSelect.qml</file>
+        <file>imports/HuskarUI/imports/HusDateTimePicker.qml</file>
+        <file>imports/HuskarUI/imports/HusPopconfirm.qml</file>
+        <file>imports/HuskarUI/imports/HusShadow.qml</file>
     </qresource>
 </RCC>

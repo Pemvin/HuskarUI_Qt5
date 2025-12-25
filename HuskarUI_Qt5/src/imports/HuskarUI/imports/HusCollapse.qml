@@ -15,7 +15,7 @@ Item {
     property bool accordion: false
     property var activeKey: accordion ? '' : []
     property var defaultActiveKey: []
-    property int expandIcon: HusIcon.RightOutlined
+    property var expandIcon: HusIcon.RightOutlined || ''
     property font titleFont: Qt.font({
                                          family: HusTheme.HusCollapse.fontFamily,
                                          pixelSize: HusTheme.HusCollapse.fontSizeTitle
@@ -144,11 +144,13 @@ Item {
 
     ListView {
         id: __listView
+        property real realHeight: 0
         anchors.fill: parent
         interactive: false
         spacing: -1
         model: ListModel { id: __listModel }
-        onContentHeightChanged: cacheBuffer = contentHeight;
+        onContentHeightChanged: realHeight = Math.max(contentHeight, 0);
+        onRealHeightChanged: cacheBuffer = realHeight;
         delegate: HusRectangle {
             id: __rootItem
             width: __listView.width

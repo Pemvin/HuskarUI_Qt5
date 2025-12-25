@@ -1,0 +1,38 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 0,
+			"id" : "QWKCore::@dd17a67fbd561fbeb5fb"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "QWKQuick::@496351c9f7f448d053ff"
+		}
+	],
+	"id" : "HuskarUIBasic_autogen_timestamp_deps::@145eef247bfb46b6828c",
+	"isGeneratorProvided" : true,
+	"name" : "HuskarUIBasic_autogen_timestamp_deps",
+	"paths" : 
+	{
+		"build" : "src",
+		"source" : "src"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

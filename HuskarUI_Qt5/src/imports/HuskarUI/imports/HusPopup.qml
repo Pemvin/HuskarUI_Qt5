@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtGraphicalEffects 1.15
 import QtQuick.Templates 2.15 as T
 import HuskarUI.Basic 1.0
 
@@ -17,9 +16,10 @@ T.Popup {
     property real maximumWidth: Number.NaN
     property real minimumHeight: 0
     property real maximumHeight: Number.NaN
-    property color colorShadow: HusTheme.HusPopup.colorShadow
-    property color colorBg: HusTheme.isDark ? HusTheme.HusPopup.colorBgDark : HusTheme.HusPopup.colorBg
-    property int radiusBg: HusTheme.HusPopup.radiusBg
+    property color colorShadow: themeSource.colorShadow
+    property color colorBg: HusTheme.isDark ? themeSource.colorBgDark : themeSource.colorBg
+    property int radiusBg: themeSource.radiusBg
+    property var themeSource: HusTheme.HusPopup
 
     implicitWidth: implicitContentWidth + leftPadding + rightPadding
     implicitHeight: implicitContentHeight + topPadding + bottomPadding
@@ -28,6 +28,7 @@ T.Popup {
             property: 'opacity';
             from: 0.0
             to: 1.0
+            easing.type: Easing.OutQuad
             duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
         }
     }
@@ -36,18 +37,16 @@ T.Popup {
             property: 'opacity'
             from: 1.0
             to: 0
+            easing.type: Easing.InQuad
             duration: control.animationEnabled ? HusTheme.Primary.durationMid : 0
         }
     }
     background: Item {
-        DropShadow {
+        HusShadow {
             anchors.fill: __popupRect
-            radius: 16
-            samples: 17
-            color: HusThemeFunctions.alpha(control.colorShadow, HusTheme.isDark ? 0.1 : 0.2)
+            shadowColor: control.colorShadow
             source: __popupRect
         }
-
         Rectangle {
             id: __popupRect
             anchors.fill: parent

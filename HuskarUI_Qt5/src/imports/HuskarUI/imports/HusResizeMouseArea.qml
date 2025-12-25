@@ -31,6 +31,9 @@ Item {
     property alias minimumY: area5.minimumY
     property alias maximumY: area5.maximumY
 
+    // === 新增信号 ===
+    signal clicked(var mouse)          // 单击事件
+    signal doubleClicked(var mouse)    // 双击事件
     objectName: '__HusResizeMouseArea__'
 
     QtObject {
@@ -200,6 +203,25 @@ Item {
         enabled: false
         target: control.target
         preventStealing: control.preventStealing
+        // 配置点击检测参数
+        clickThreshold: 5
+        clickTimeThreshold: 200
+        enableClickDetection: true
+        
+        // 根据阻断状态转发点击事件
+        onClicked: (mouse) => {
+            if (!shouldBlockClick) {
+                control.clicked(mouse);
+            } else {
+                console.log("HusResizeMouseArea: blocking click from area5 due to drag/time");
+            }
+        }
+        
+        onDoubleClicked: (mouse) => {
+            if (!shouldBlockClick) {
+                control.doubleClicked(mouse);
+            } 
+        }
     }
 
     MouseArea {

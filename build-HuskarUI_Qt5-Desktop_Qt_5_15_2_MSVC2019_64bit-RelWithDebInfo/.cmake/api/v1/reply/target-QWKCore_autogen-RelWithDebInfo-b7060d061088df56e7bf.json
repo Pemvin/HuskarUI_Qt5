@@ -1,0 +1,71 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"3rdparty/qwindowkit/src/core/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "QWKCore_autogen_timestamp_deps::@dd17a67fbd561fbeb5fb"
+		}
+	],
+	"id" : "QWKCore_autogen::@dd17a67fbd561fbeb5fb",
+	"isGeneratorProvided" : true,
+	"name" : "QWKCore_autogen",
+	"paths" : 
+	{
+		"build" : "3rdparty/qwindowkit/src/core",
+		"source" : "3rdparty/qwindowkit/src/core"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "D:/workspaces/HuskarUI_Qt5/build-HuskarUI_Qt5-Desktop_Qt_5_15_2_MSVC2019_64bit-RelWithDebInfo/3rdparty/qwindowkit/src/core/CMakeFiles/QWKCore_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "D:/workspaces/HuskarUI_Qt5/build-HuskarUI_Qt5-Desktop_Qt_5_15_2_MSVC2019_64bit-RelWithDebInfo/3rdparty/qwindowkit/src/core/CMakeFiles/QWKCore_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "D:/workspaces/HuskarUI_Qt5/build-HuskarUI_Qt5-Desktop_Qt_5_15_2_MSVC2019_64bit-RelWithDebInfo/3rdparty/qwindowkit/src/core/QWKCore_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

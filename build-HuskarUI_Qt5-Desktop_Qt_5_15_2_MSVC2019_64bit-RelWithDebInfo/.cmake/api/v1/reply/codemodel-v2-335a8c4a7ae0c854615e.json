@@ -1,0 +1,312 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						5,
+						6
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "3rdparty/qwindowkit",
+					"childIndexes" : 
+					[
+						2
+					],
+					"jsonFile" : "directory-3rdparty.qwindowkit-RelWithDebInfo-234f947919a39bbeb0bb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "3rdparty/qwindowkit"
+				},
+				{
+					"build" : "3rdparty/qwindowkit/src",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
+					"jsonFile" : "directory-3rdparty.qwindowkit.src-RelWithDebInfo-a577a1d5f58bfc2fb803.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "3rdparty/qwindowkit/src"
+				},
+				{
+					"build" : "3rdparty/qwindowkit/src/core",
+					"jsonFile" : "directory-3rdparty.qwindowkit.src.core-RelWithDebInfo-0c1cacb449f681385992.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "3rdparty/qwindowkit/src/core",
+					"targetIndexes" : 
+					[
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"build" : "3rdparty/qwindowkit/src/quick",
+					"jsonFile" : "directory-3rdparty.qwindowkit.src.quick-RelWithDebInfo-78e475f418607c18c17f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 3,
+					"source" : "3rdparty/qwindowkit/src/quick",
+					"targetIndexes" : 
+					[
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"build" : "src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src-RelWithDebInfo-2ee94a3209d38dde219b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "src",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"build" : "gallery",
+					"jsonFile" : "directory-gallery-RelWithDebInfo-f19b951a6daa69b2b0a6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "gallery",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						4,
+						5
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "HuskarUI_Qt5_Solution"
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						2
+					],
+					"name" : "QWindowKit",
+					"parentIndex" : 0
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "QWKCore",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "QWKQuick",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						9,
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "HuskarUIBasic",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "Gallery",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 6,
+					"id" : "Gallery::@29169be08c105d870123",
+					"jsonFile" : "target-Gallery-RelWithDebInfo-b13c71cf66fade441c27.json",
+					"name" : "Gallery",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "Gallery_autogen::@29169be08c105d870123",
+					"jsonFile" : "target-Gallery_autogen-RelWithDebInfo-53b5e4b95adb391f283a.json",
+					"name" : "Gallery_autogen",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "Gallery_autogen_timestamp_deps::@29169be08c105d870123",
+					"jsonFile" : "target-Gallery_autogen_timestamp_deps-RelWithDebInfo-57ac2a91357f2fe9e96b.json",
+					"name" : "Gallery_autogen_timestamp_deps",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "HuskarUIBasic::@145eef247bfb46b6828c",
+					"jsonFile" : "target-HuskarUIBasic-RelWithDebInfo-49960647829dbdc94878.json",
+					"name" : "HuskarUIBasic",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "HuskarUIBasic_autogen::@145eef247bfb46b6828c",
+					"jsonFile" : "target-HuskarUIBasic_autogen-RelWithDebInfo-2b6a2837f0b93d2fd03c.json",
+					"name" : "HuskarUIBasic_autogen",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "HuskarUIBasic_autogen_timestamp_deps::@145eef247bfb46b6828c",
+					"jsonFile" : "target-HuskarUIBasic_autogen_timestamp_deps-RelWithDebInfo-0cf79afcc0f04c3891a2.json",
+					"name" : "HuskarUIBasic_autogen_timestamp_deps",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "QWKCore::@dd17a67fbd561fbeb5fb",
+					"jsonFile" : "target-QWKCore-RelWithDebInfo-f01bfe052d77b6f53593.json",
+					"name" : "QWKCore",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "QWKCore_autogen::@dd17a67fbd561fbeb5fb",
+					"jsonFile" : "target-QWKCore_autogen-RelWithDebInfo-b7060d061088df56e7bf.json",
+					"name" : "QWKCore_autogen",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "QWKCore_autogen_timestamp_deps::@dd17a67fbd561fbeb5fb",
+					"jsonFile" : "target-QWKCore_autogen_timestamp_deps-RelWithDebInfo-533481b4976bd8cb5559.json",
+					"name" : "QWKCore_autogen_timestamp_deps",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "QWKQuick::@496351c9f7f448d053ff",
+					"jsonFile" : "target-QWKQuick-RelWithDebInfo-3c7c256508779e518669.json",
+					"name" : "QWKQuick",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "QWKQuick_autogen::@496351c9f7f448d053ff",
+					"jsonFile" : "target-QWKQuick_autogen-RelWithDebInfo-0576694dbc2c7d531c86.json",
+					"name" : "QWKQuick_autogen",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "QWKQuick_autogen_timestamp_deps::@496351c9f7f448d053ff",
+					"jsonFile" : "target-QWKQuick_autogen_timestamp_deps-RelWithDebInfo-c0d6a07d516ee6c94350.json",
+					"name" : "QWKQuick_autogen_timestamp_deps",
+					"projectIndex" : 3
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/workspaces/HuskarUI_Qt5/build-HuskarUI_Qt5-Desktop_Qt_5_15_2_MSVC2019_64bit-RelWithDebInfo",
+		"source" : "D:/workspaces/HuskarUI_Qt5/HuskarUI_Qt5"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

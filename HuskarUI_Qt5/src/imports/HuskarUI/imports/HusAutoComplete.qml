@@ -20,43 +20,44 @@ HusInput {
 
     property Component labelDelegate: HusText {
         text: textData
-        color: HusTheme.HusAutoComplete.colorItemText
+        color: control.themeSource.colorItemText
         font {
-            family: HusTheme.HusAutoComplete.fontFamily
-            pixelSize: HusTheme.HusAutoComplete.fontSize
+            family: control.themeSource.fontFamily
+            pixelSize: control.themeSource.fontSize
             weight: highlighted ? Font.DemiBold : Font.Normal
         }
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
     }
     property Component labelBgDelegate: Rectangle {
-        radius: HusTheme.HusAutoComplete.radiusLabelBg
-        color: highlighted ? HusTheme.HusAutoComplete.colorItemBgActive :
-                             (hovered || selected) ? HusTheme.HusAutoComplete.colorItemBgHover :
-                                                     HusTheme.HusAutoComplete.colorItemBg;
+        radius: control.themeSource.radiusLabelBg
+                color: highlighted ? control.themeSource.colorItemBgActive :
+                                     (hovered || selected) ? control.themeSource.colorItemBgHover :
+                                                             control.themeSource.colorItemBg;
 
         Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationMid } }
     }
 
     objectName: '__HusAutoComplete__'
+    themeSource: HusTheme.HusAutoComplete
     iconPosition: HusInput.Position_Right
     iconDelegate: HusIconText {
         iconSource: control.iconSource
         iconSize: control.iconSize
         colorIcon: control.enabled ?
-                       __hoverHandler.hovered ? HusTheme.HusAutoComplete.colorIconHover :
-                                                HusTheme.HusAutoComplete.colorIcon : HusTheme.HusAutoComplete.colorIconDisabled
+                       __hoverHandler.hovered ? control.themeSource.colorIconHover :
+                                                control.themeSource.colorIcon : control.themeSource.colorIconDisabled
 
         Behavior on colorIcon { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationMid } }
 
         HoverHandler {
             id: __hoverHandler
-            enabled: control.clearEnabled
+            enabled: control.clearEnabled && !control.readOnly
             cursorShape: control.length > 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
         }
 
         TapHandler {
-            enabled: control.clearEnabled
+            enabled: control.clearEnabled && !control.readOnly
             onTapped: control.clearInput();
         }
     }
@@ -134,6 +135,7 @@ HusInput {
     }
 
     TapHandler {
+        enabled: control.clearEnabled && !control.readOnly
         onTapped: {
             if (__private.model.length > 0)
                 control.openPopup();
@@ -142,6 +144,7 @@ HusInput {
 
     HusPopup {
         id: __popup
+        y: control.height + 6
         implicitWidth: control.width
         implicitHeight: Math.min(control.defaultPopupMaxHeight, __popupListView.contentHeight) + topPadding + bottomPadding
         leftPadding: 4
@@ -150,17 +153,7 @@ HusInput {
         bottomPadding: 6
         animationEnabled: control.animationEnabled
         closePolicy: T.Popup.NoAutoClose | T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent
-        onAboutToShow: {
-            const pos = control.mapToItem(null, 0, 0);
-            x = (control.width - width) * 0.5;
-            if (__private.window.height > (pos.y + control.height + implicitHeight + 6)){
-                y = control.height + 6;
-            } else if (pos.y > implicitHeight) {
-                y = Qt.binding(() => -implicitHeight - 6);
-            } else {
-                y = __private.window.height - (pos.y + implicitHeight + 6);
-            }
-        }
+        Component.onCompleted: HusApi.setPopupAllowAutoFlip(this);
         enter: Transition {
             NumberAnimation {
                 property: 'opacity'

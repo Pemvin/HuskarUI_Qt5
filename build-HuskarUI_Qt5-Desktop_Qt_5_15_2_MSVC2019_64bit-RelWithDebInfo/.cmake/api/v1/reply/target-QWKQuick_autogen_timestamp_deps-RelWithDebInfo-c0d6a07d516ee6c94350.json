@@ -1,0 +1,34 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"3rdparty/qwindowkit/src/quick/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 0,
+			"id" : "QWKCore::@dd17a67fbd561fbeb5fb"
+		}
+	],
+	"id" : "QWKQuick_autogen_timestamp_deps::@496351c9f7f448d053ff",
+	"isGeneratorProvided" : true,
+	"name" : "QWKQuick_autogen_timestamp_deps",
+	"paths" : 
+	{
+		"build" : "3rdparty/qwindowkit/src/quick",
+		"source" : "3rdparty/qwindowkit/src/quick"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

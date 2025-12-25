@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(HUSKARUI_VERSION 0.4.3.0)
+set(HUSKARUI_VERSION 0.4.6.0)
 
 message(STATUS "Configuring HuskarUI Version: ${HUSKARUI_VERSION}")
 
@@ -16,12 +16,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(Qt5 COMPONENTS Quick REQUIRED)
-
-#Set plugin output dir
-set(HUSKARUI_HEADER_OUTPUT_DIRECTORY "" CACHE PATH "HuskarUI header output dir.")
-set(HUSKARUI_LIBRARY_OUTPUT_DIRECTORY "" CACHE PATH "HuskarUI library output dir.")
-set(HUSKARUI_PLUGIN_OUTPUT_DIRECTORY "" CACHE PATH "HuskarUI plugin output dir.")
+find_package(Qt5 COMPONENTS Quick QuickTemplates2 REQUIRED)
 
 if(NOT HUSKARUI_HEADER_OUTPUT_DIRECTORY)
     set(HUSKARUI_HEADER_OUTPUT_DIRECTORY ${Qt5_DIR}/../../../include/HuskarUI)
@@ -99,6 +94,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt::Quick
     Qt::QuickPrivate
+    Qt::QuickTemplates2Private
     $<$<BOOL:${BUILD_HUSKARUI_ON_DESKTOP_PLATFORM}>:QWKCore>
     $<$<BOOL:${BUILD_HUSKARUI_ON_DESKTOP_PLATFORM}>:QWKQuick>
 )

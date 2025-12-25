@@ -50,6 +50,13 @@ HusRectangle {
 
     property color colorResizeBlockBg: HusTheme.HusTableView.colorResizeBlockBg
 
+    // 新增：对外暴露鼠标点击所在行/列/键，以及点击信号（兼容旧 onRowClicked）
+    signal rowClicked(row: int, column: int, key: string)
+    // 统一新信号：携带鼠标按钮与修饰键
+    signal rowClickedWithButton(row: int, column: int, x: real, y: real,button: int, modifiers: int)
+    property int currentClickRow: -1
+    property int currentClickColumn: -1
+    property string currentClickKey: ''
     property Component columnHeaderDelegate: Item {
         id: __columnHeaderDelegate
         property string align: headerData.align ?? 'center'
@@ -80,6 +87,19 @@ HusRectangle {
                     return Text.AlignRight;
                 else
                     return Text.AlignHCenter;
+            }
+        }
+
+        // 允许每列自定义列头点击事件（若提供 onHeaderClicked 回调） / Enable per-column header click if onHeaderClicked is provided
+        MouseArea {
+            enabled: typeof headerData.onHeaderClicked === 'function'
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: cursorShape = Qt.PointingHandCursor;
+            onExited: cursorShape = Qt.ArrowCursor;
+            onClicked: {
+                // 调用列配置中的回调，传入当前列索引 / Invoke callback from column config with current column index
+                headerData.onHeaderClicked(column);
             }
         }
 
@@ -308,6 +328,7 @@ HusRectangle {
                     }
                 }
             }
+            Component.onCompleted: HusApi.setPopupAllowAutoFlip(this);
         }
     }
 
@@ -353,7 +374,7 @@ HusRectangle {
     }
 
     function checkForKeys(keys) {
-        keys.forEach(key => __private.checkedKeysMap.set(object.key, true));
+        keys.forEach(key => __private.checkedKeysMap.set(key, true));
         __private.checkedKeysMapChanged();
     }
 
@@ -367,7 +388,15 @@ HusRectangle {
         __private.parentCheckState = Qt.Unchecked;
         __private.parentCheckStateChanged();
     }
-
+    function scrollToRow(row) {
+        // Calculate contentY position based on rowHeights array
+        let totalHeight = 0;
+        for (let i = 0; i < row && i < __cellView.rowHeights.length; i++) {
+            totalHeight += __cellView.rowHeights[i];
+        }
+        __cellView.contentY = totalHeight;
+        __private.updateParentCheckBox();
+    }
     function sort(column) {
         /*! 仅需设置排序相关属性, 真正的排序在 filter() 中完成 */
         if (columns[column].hasOwnProperty('sorter')) {
@@ -391,30 +420,36 @@ HusRectangle {
     }
 
     function clearSort() {
-        columns.forEach(
-                    object => {
-                        if (object.sortDirections && object.sortDirections.length !== 0) {
-                            object.activeSorter = false;
-                            object.sortIndex = -1;
-                            object.sortMode = 'false';
-                        }
-                    });
+        if (columns && columns.length > 0) {
+
+            columns.forEach(
+                        object => {
+                            if (object.sortDirections && object.sortDirections.length !== 0) {
+                                object.activeSorter = false;
+                                object.sortIndex = -1;
+                                object.sortMode = 'false';
+                            }
+                        });
+    }
         __private.model = [...initModel];
     }
 
     function filter() {
         let changed = false;
         let model = [...initModel];
-        columns.forEach(
-                    object => {
-                        if (object.hasOwnProperty('onFilter') && object.hasOwnProperty('filterInput')) {
-                            model = model.filter((record, index) => object.onFilter(object.filterInput, record));
-                            changed = true;
-                        }
-                    });
+        if (columns && columns.length > 0) {
+
+            columns.forEach(
+                        object => {
+                            if (object.hasOwnProperty('onFilter') && object.hasOwnProperty('filterInput')) {
+                                model = model.filter((record, index) => object.onFilter(object.filterInput, record));
+                                changed = true;
+                            }
+                        });
+        } else changed = true;
         if (changed)
             __private.model = model;
-
+        if (!columns || columns.length == 0) return;
         /*! 根据 activeSorter 列排序 */
         columns.forEach(
                     object => {
@@ -436,6 +471,7 @@ HusRectangle {
     }
 
     function clearFilter() {
+        if (!columns || columns.length == 0) return;
         columns.forEach(
                     object => {
                         if (object.hasOwnProperty('onFilter') || object.hasOwnProperty('filterInput'))
@@ -447,6 +483,7 @@ HusRectangle {
     function clear() {
         __private.model = initModel = [];
         __cellModel.clear();
+        if (!columns || columns.length == 0) return;
         columns.forEach(
                     object => {
                         if (object.sortDirections && object.sortDirections.length !== 0) {
@@ -486,9 +523,9 @@ HusRectangle {
     function moveRow(fromRowIndex, toRowIndex, count = 1) {
         if (fromRowIndex >= 0 && fromRowIndex < __private.model.length &&
                 toRowIndex >= 0 && toRowIndex < __private.model.length) {
-            const objects = __private.model.splice(from, count);
+            const objects = __private.model.splice(fromRowIndex, count);
             __cellModel.moveRow(fromRowIndex, toRowIndex, count);
-            __private.model.splice(to, 0, ...objects);
+            __private.model.splice(toRowIndex, 0, ...objects);
             __private.updateRowHeader();
         }
     }
@@ -619,19 +656,21 @@ HusRectangle {
             __cellModel.clear();
 
             let cellRows = [];
-            model.forEach(
-                        (object, index) => {
-                            let data = { };
-                            for (let i = 0; i < columns.length; i++) {
-                                const dataIndex = columns[i].dataIndex ?? '';
-                                if (object.hasOwnProperty(dataIndex)) {
-                                    data[`__data${i}`] = object[dataIndex];
-                                } else {
-                                    data[`__data${i}`] = null;
+            if (columns && columns.length > 0) {
+                model.forEach(
+                            (object, index) => {
+                                let data = { };
+                                for (let i = 0; i < columns.length; i++) {
+                                    const dataIndex = columns[i].dataIndex ?? '';
+                                    if (object.hasOwnProperty(dataIndex)) {
+                                        data[`__data${i}`] = object[dataIndex];
+                                    } else {
+                                        data[`__data${i}`] = null;
+                                    }
                                 }
-                            }
-                            cellRows.push(data);
-                        });
+                                cellRows.push(data);
+                            });
+            }
             __cellModel.rows = cellRows;
 
             __cellView.rowHeights = Array.from({ length: model.length }, () => control.defaultRowHeaderHeight);
@@ -794,9 +833,12 @@ HusRectangle {
         anchors.left: __columnHeaderViewBg.left
         anchors.right: __columnHeaderViewBg.right
         hoverEnabled: true
+        acceptedButtons: Qt.RightButton
         onExited: __cellView.currentHoverRow = -1;
         onWheel: wheel => wheel.accepted = !control.propagateWheelEvent;
-
+        onReleased: function(mouse) {
+            control.rowClickedWithButton(-1, -1, mouse.x, mouse.y,mouse.button, mouse.modifiers);
+        }
         TableView {
             id: __cellView
 
@@ -876,7 +918,24 @@ HusRectangle {
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+                    property bool __pressIn: false
                     onEntered: __cellView.currentHoverRow = __rootItem.row;
+                    onPressed: __pressIn = true;
+                    onExited: __pressIn = false;
+                    onCanceled: __pressIn = false;
+                    onReleased: function(mouse) {
+                        if (!__pressIn) return; // 过滤“外按内放”
+                        __pressIn = false;
+                        control.currentClickRow = __rootItem.row;
+                        control.currentClickColumn = __rootItem.column;
+                        control.currentClickKey = __rootItem.key;
+                        // 统一发射新信号，传递按钮与修饰键；同时兼容旧 rowClicked（仅左键）
+                        control.rowClickedWithButton(__rootItem.row, __rootItem.column, mouse.x, mouse.y, mouse.button, mouse.modifiers);
+                        if (mouse.button === Qt.LeftButton) {
+                            control.rowClicked(__rootItem.row, __rootItem.column, __rootItem.key);
+                        }
+                    }
 
                     Loader {
                         id: __childCheckBoxLoader

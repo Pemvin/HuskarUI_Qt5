@@ -30,7 +30,6 @@ HusRate 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusRate.qml
 HusRadio 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusRadio.qml
 HusRadioBlock 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusRadioBlock.qml
 HusCheckBox 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusCheckBox.qml
-HusTimePicker 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusTimePicker.qml
 HusDrawer 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusDrawer.qml
 HusCollapse 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusCollapse.qml
 HusAvatar 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusAvatar.qml
@@ -43,7 +42,6 @@ HusTableView 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusTableView.qml
 HusMessage 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusMessage.qml
 HusAutoComplete 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusAutoComplete.qml
 HusText 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusText.qml
-HusDatePicker 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusDatePicker.qml
 HusProgress 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusProgress.qml
 HusBadge 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusBadge.qml
 HusButtonBlock 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusButtonBlock.qml
@@ -55,4 +53,8 @@ HusInputNumber 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusInputNumber.qml
 HusImage 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusImage.qml
 HusImagePreview 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusImagePreview.qml
 HusMultiSelect 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusMultiSelect.qml
+HusDateTimePicker 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusDateTimePicker.qml
+HusShadow 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusShadow.qml
+HusNotification 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusNotification.qml
+HusPopconfirm 1.0 qrc:/HuskarUI/imports/HuskarUI/imports/HusPopconfirm.qml
 

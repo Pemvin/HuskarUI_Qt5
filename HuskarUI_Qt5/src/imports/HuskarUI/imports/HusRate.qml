@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtGraphicalEffects 1.15
 import HuskarUI.Basic 1.0
 
 Item {
@@ -16,20 +15,24 @@ Item {
     property alias spacing: __row.spacing
     property int iconSize: 24
     /* 文字提示 */
-    property font toolTipFont
+    property font toolTipFont: Qt.font({
+                                           family: HusTheme.HusRate.fontFamily,
+                                           pixelSize: HusTheme.HusRate.fontSize
+                                       })
     property bool toolTipVisible: false
     property var toolTipTexts: []
     property color colorFill: HusTheme.HusRate.colorFill
     property color colorEmpty: HusTheme.HusRate.colorEmpty
     property color colorHalf: HusTheme.HusRate.colorHalf
+    property color colorToolTipShadow: HusTheme.HusRate.colorToolTipShadow
     property color colorToolTipText: HusTheme.HusRate.colorToolTipText
     property color colorToolTipBg: HusTheme.isDark ? HusTheme.HusRate.colorToolTipBgDark : HusTheme.HusRate.colorToolTipBg
     /* 允许半星 */
     property bool allowHalf: false
     property bool isDone: false
-    property int fillIcon: HusIcon.StarFilled
-    property int emptyIcon: HusIcon.StarFilled
-    property int halfIcon: HusIcon.StarFilled
+    property var fillIcon: HusIcon.StarFilled || ''
+    property var emptyIcon: HusIcon.StarFilled || ''
+    property var halfIcon: HusIcon.StarFilled || ''
     /* 是否支持半星动画 */
     property bool supportsHalfAnimation: allowHalf && ((fillIcon === HusIcon.StarFilled && emptyIcon === HusIcon.StarFilled) || halfIcon !== emptyIcon)
     property Component fillDelegate: HusIconText {
@@ -88,12 +91,10 @@ Item {
 
         Behavior on opacity { enabled: control.animationEnabled; NumberAnimation { duration: HusTheme.Primary.durationFast } }
 
-        DropShadow {
+        HusShadow {
             anchors.fill: __item
-            radius: 16
-            samples: 17
-            color: HusThemeFunctions.alpha(control.colorToolTipText, HusTheme.isDark ? 0.1 : 0.2)
             source: __item
+            shadowColor: control.colorToolTipShadow
         }
 
         Item {
@@ -113,7 +114,7 @@ Item {
                 color: control.colorToolTipBg
                 radius: 4
 
-                Text {
+                HusText {
                     id: __toolTipText
                     color: control.colorToolTipText
                     text: control.toolTipTexts[index]

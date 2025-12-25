@@ -312,34 +312,29 @@ filterInput | string | 单元格的过滤输入
                         {
                             title: 'Name',
                             dataIndex: 'name',
-                            key: 'name',
                             delegate: textDelegate,
                             width: 200
                         },
                         {
                             title: 'Age',
                             dataIndex: 'age',
-                            key: 'age',
                             delegate: textDelegate,
                             width: 100
                         },
                         {
                             title: 'Address',
                             dataIndex: 'address',
-                            key: 'address',
                             delegate: textDelegate,
                             width: 300
                         },
                         {
                             title: 'Tags',
-                            key: 'tags',
                             dataIndex: 'tags',
                             delegate: tagsDelegate,
                             width: 200
                         },
                         {
                             title: 'Action',
-                            key: 'action',
                             dataIndex: 'action',
                             delegate: actionDelegate,
                             width: 300
@@ -476,8 +471,8 @@ filterInput | string | 单元格的过滤输入
 
                     HusPagination {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        total: 1000
-                        pageSize: 100
+                        total: 10
+                        pageSize: 1
                         showQuickJumper: true
                         onCurrentPageIndexChanged: {
                             /*! 生成一些数据 */
@@ -584,8 +579,8 @@ filterInput | string | 单元格的过滤输入
 
                 HusPagination {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    total: 1000
-                    pageSize: 100
+                    total: 10
+                    pageSize: 1
                     showQuickJumper: true
                     onCurrentPageIndexChanged: {
                         /*! 生成一些数据 */
@@ -666,8 +661,8 @@ filterInput | string | 单元格的过滤输入
 
                     HusPagination {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        total: 1000
-                        pageSize: 100
+                        total: 10
+                        pageSize: 1
                         showQuickJumper: true
                         onCurrentPageIndexChanged: {
                             /*! 生成一些数据 */
@@ -732,8 +727,8 @@ filterInput | string | 单元格的过滤输入
 
                 HusPagination {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    total: 1000
-                    pageSize: 100
+                    total: 10
+                    pageSize: 1
                     showQuickJumper: true
                     onCurrentPageIndexChanged: {
                         /*! 生成一些数据 */
@@ -882,34 +877,29 @@ filterInput | string | 单元格的过滤输入
                         {
                             title: 'Name',
                             dataIndex: 'name',
-                            key: 'name',
                             delegate: textDelegate,
                             width: 200
                         },
                         {
                             title: 'Age',
                             dataIndex: 'age',
-                            key: 'age',
                             delegate: textDelegate,
                             width: 100
                         },
                         {
                             title: 'Address',
                             dataIndex: 'address',
-                            key: 'address',
                             delegate: textDelegate,
                             width: 300
                         },
                         {
                             title: 'Tags',
-                            key: 'tags',
                             dataIndex: 'tags',
                             delegate: tagsDelegate,
                             width: 200
                         },
                         {
                             title: 'Action',
-                            key: 'action',
                             dataIndex: 'action',
                             delegate: actionDelegate,
                             width: 300

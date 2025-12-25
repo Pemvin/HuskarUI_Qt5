@@ -9,7 +9,6 @@
         <file>theme/HusCheckBox.json</file>
         <file>theme/HusCollapse.json</file>
         <file>theme/HusCopyableText.json</file>
-        <file>theme/HusDatePicker.json</file>
         <file>theme/HusDivider.json</file>
         <file>theme/HusDrawer.json</file>
         <file>theme/HusIconText.json</file>
@@ -31,9 +30,11 @@
         <file>theme/HusTabView.json</file>
         <file>theme/HusTag.json</file>
         <file>theme/HusTimeline.json</file>
-        <file>theme/HusTimePicker.json</file>
         <file>theme/HusToolTip.json</file>
         <file>theme/HusTour.json</file>
         <file>theme/Index.json</file>
+        <file>theme/HusDateTimePicker.json</file>
+        <file>theme/HusNotification.json</file>
+        <file>theme/HusPopconfirm.json</file>
     </qresource>
 </RCC>
