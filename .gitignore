@@ -71,6 +71,9 @@ CMakeLists.txt.user*
 # --------
 *.dll
 *.exe
+# 编译产物
+*.dylib
+*.lib
 
 # CMake generated files
 build/
@@ -90,3 +93,20 @@ Makefile
 
 # clang
 /.cache/
+# 构建目录
+cmake-build-*/
+out/
+build-*/
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Qt
+*.pro.user
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
