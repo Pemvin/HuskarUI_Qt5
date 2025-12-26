@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/Gallery">
-        <file>UpdateLists.json</file>
-        <file>images/huskarui_icon.svg</file>
-    </qresource>
-</RCC>
