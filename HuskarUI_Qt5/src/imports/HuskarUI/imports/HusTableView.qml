@@ -224,6 +224,12 @@ HusRectangle {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
         }
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: control.currentClickRow = row;
+        }
     }
     property Component columnHeaderSorterIconDelegate: Item {
         id: __sorterIconDelegate
@@ -783,6 +789,7 @@ HusRectangle {
             delegate: Item {
                 id: __rowHeaderItem
                 implicitWidth: control.defaultRowHeaderWidth
+                implicitHeight: control.defaultRowHeaderHeight
                 clip: true
 
                 required property var model
