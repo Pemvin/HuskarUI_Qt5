@@ -57,6 +57,7 @@ HusRectangle {
     property int currentClickRow: -1
     property int currentClickColumn: -1
     property string currentClickKey: ''
+    property alias currentHoverRow:__cellView.currentHoverRow
     property Component columnHeaderDelegate: Item {
         id: __columnHeaderDelegate
         property string align: headerData.align ?? 'center'
@@ -394,13 +395,25 @@ HusRectangle {
         __private.parentCheckState = Qt.Unchecked;
         __private.parentCheckStateChanged();
     }
-    function scrollToRow(row) {
-        // Calculate contentY position based on rowHeights array
+    function scrollToRow(row, visiblePosition = 0) {
         let totalHeight = 0;
-        for (let i = 0; i < row && i < __cellView.rowHeights.length; i++) {
-            totalHeight += __cellView.rowHeights[i];
+        let visibleOffset = 0;
+        let maxIndex = Math.max(row, visiblePosition);
+        for (let i = 0; i < maxIndex && i < __cellView.rowHeights.length; i++) {
+            if (i < row) {
+                totalHeight += __cellView.rowHeights[i];
+            }
+            if (i < visiblePosition) {
+                visibleOffset += __cellView.rowHeights[i];
+            }
         }
-        __cellView.contentY = totalHeight;
+        
+        // Set contentY to position target row at specified visible position
+        __cellView.contentY = Math.max(0, totalHeight - visibleOffset);
+        __private.updateParentCheckBox();
+    }
+    function positionViewAtRow( row , mode ) {
+        __cellView.positionViewAtRow( row , mode );
         __private.updateParentCheckBox();
     }
     function sort(column) {
@@ -489,6 +502,7 @@ HusRectangle {
     function clear() {
         __private.model = initModel = [];
         __cellModel.clear();
+        __cellView.rowHeights = [];
         if (!columns || columns.length == 0) return;
         columns.forEach(
                     object => {
@@ -510,6 +524,7 @@ HusRectangle {
     function appendRow(object) {
         __cellModel.appendRow(__private.toCellObject(object));
         __private.model.push(object);
+        __cellView.rowHeights.push(control.defaultRowHeaderHeight);
         __private.updateRowHeader();
     }
 
@@ -523,6 +538,7 @@ HusRectangle {
     function insertRow(rowIndex, object) {
         __cellModel.insertRow(rowIndex, __private.toCellObject(object));
         __private.model.splice(rowIndex, 0, object);
+        __cellView.rowHeights.splice(rowIndex, 0, control.defaultRowHeaderHeight);
         __private.updateRowHeader();
     }
 
@@ -532,6 +548,8 @@ HusRectangle {
             const objects = __private.model.splice(fromRowIndex, count);
             __cellModel.moveRow(fromRowIndex, toRowIndex, count);
             __private.model.splice(toRowIndex, 0, ...objects);
+            const heights = __cellView.rowHeights.splice(fromRowIndex, count);
+            __cellView.rowHeights.splice(toRowIndex, 0, ...heights);
             __private.updateRowHeader();
         }
     }
@@ -540,6 +558,7 @@ HusRectangle {
         if (rowIndex >= 0 && rowIndex < __private.model.length) {
             __cellModel.removeRow(rowIndex, count);
             __private.model.splice(rowIndex, count);
+            __cellView.rowHeights.splice(rowIndex, count);
             __private.updateRowHeader();
         }
     }
