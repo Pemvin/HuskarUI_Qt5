@@ -225,6 +225,7 @@ filterInput | string | 单元格的过滤输入
         CodeBox {
             width: parent.width
             descTitle: qsTr('基本用法')
+            async:false
             desc: qsTr(`
 简单的表格，最后一列是各种操作。\n
                        `)
@@ -273,7 +274,7 @@ filterInput | string | 单元格的过滤输入
                                 key: 'action',
                                 dataIndex: 'action',
                                 delegate: actionDelegate,
-                                width: 300
+                                width: 100
                             }
                         ]
                         initModel: [
@@ -283,6 +284,7 @@ filterInput | string | 单元格的过滤输入
                                 age: 32,
                                 address: 'New York No. 1 Lake Park',
                                 tags: ['nice', 'developer'],
+                                action: 'action'
                             },
                             {
                                 key: '2',
@@ -290,6 +292,7 @@ filterInput | string | 单元格的过滤输入
                                 age: 42,
                                 address: 'London No. 1 Lake Park',
                                 tags: ['loser'],
+                                action: 'action'
                             },
                             {
                                 key: '3',
@@ -297,6 +300,7 @@ filterInput | string | 单元格的过滤输入
                                 age: 32,
                                 address: 'Sydney No. 1 Lake Park',
                                 tags: ['cool', 'teacher'],
+                                action: 'action'
                             }
                         ]
                     }
@@ -337,7 +341,7 @@ filterInput | string | 单元格的过滤输入
                             title: 'Action',
                             dataIndex: 'action',
                             delegate: actionDelegate,
-                            width: 300
+                            width: 100
                         }
                     ]
                     initModel: [
@@ -346,6 +350,7 @@ filterInput | string | 单元格的过滤输入
                             name: 'John Brown',
                             age: 32,
                             address: 'New York No. 1 Lake Park',
+                            action: 'action',
                             tags: ['nice', 'developer'],
                         },
                         {
@@ -354,6 +359,7 @@ filterInput | string | 单元格的过滤输入
                             age: 42,
                             address: 'London No. 1 Lake Park',
                             tags: ['loser'],
+                            action: 'action'
                         },
                         {
                             key: '3',
@@ -361,6 +367,7 @@ filterInput | string | 单元格的过滤输入
                             age: 32,
                             address: 'Sydney No. 1 Lake Park',
                             tags: ['cool', 'teacher'],
+                            action: 'action'
                         }
                     ]
                 }
@@ -484,6 +491,7 @@ filterInput | string | 单元格的过滤输入
                                                 age: i % 30 + 30,
                                                 address: \`London, Park Lane no. \${i + currentPageIndex * pageSize}\`,
                                                 tags: ['nice', 'cool', 'loser', 'teacher', 'developer'].splice(0, i % 5 + 1),
+                                                action: 'action',
                                             }
                                         });
                         }
@@ -508,6 +516,8 @@ filterInput | string | 单元格的过滤输入
                         Timer {
                             id: reloadTimer
                             interval: 2000
+                            repeat: false
+                            running: false
                             onTriggered: {
                                 parent.loading = false;
                                 tableView.clearAllCheckedKeys();
@@ -533,7 +543,6 @@ filterInput | string | 单元格的过滤输入
                         onClicked: tableView.alternatingRow = checked;
                     }
                 }
-
                 HusTableView {
                     id: tableView
                     width: parent.width
@@ -560,19 +569,19 @@ filterInput | string | 单元格的过滤输入
                             title: 'Address',
                             dataIndex: 'address',
                             delegate: textDelegate,
-                            width: 300
+                            width: 200
                         },
                         {
                             title: 'Tags',
                             dataIndex: 'tags',
                             delegate: tagsDelegate,
-                            width: 350,
+                            width: 250,
                         },
                         {
                             title: 'Action',
                             dataIndex: 'action',
                             delegate: actionDelegate,
-                            width: 200
+                            width: 100
                         }
                     ]
                 }
@@ -592,6 +601,7 @@ filterInput | string | 单元格的过滤输入
                                             age: i % 30 + 30,
                                             address: `London, Park Lane no. ${i + currentPageIndex * pageSize}`,
                                             tags: ['nice', 'cool', 'loser', 'teacher', 'developer'].splice(0, i % 5 + 1),
+                                            action: 'action',
                                         }
                                     });
                     }
@@ -711,7 +721,7 @@ filterInput | string | 单元格的过滤输入
                             title: 'Address',
                             dataIndex: 'address',
                             delegate: textDelegate,
-                            width: 300,
+                            width: 200,
                             sorter: (a, b) => a.address.length - b.address.length,
                             sortDirections: ['ascend', 'descend', 'false'],
                             onFilter: (value, record) => record.address.includes(value)
@@ -720,7 +730,7 @@ filterInput | string | 单元格的过滤输入
                             title: 'Tags',
                             dataIndex: 'tags',
                             delegate: tagsDelegate,
-                            width: 350,
+                            width: 150,
                         },
                     ]
                 }
@@ -746,7 +756,7 @@ filterInput | string | 单元格的过滤输入
                 }
             }
         }
-
+       
         CodeBox {
             width: parent.width
             descTitle: qsTr('从C++中导入数据')
@@ -845,7 +855,7 @@ filterInput | string | 单元格的过滤输入
                                 key: 'action',
                                 dataIndex: 'action',
                                 delegate: actionDelegate,
-                                width: 300
+                                width: 100
                             }
                         ]
 
@@ -902,7 +912,7 @@ filterInput | string | 单元格的过滤输入
                             title: 'Action',
                             dataIndex: 'action',
                             delegate: actionDelegate,
-                            width: 300
+                            width: 100
                         }
                     ]
 

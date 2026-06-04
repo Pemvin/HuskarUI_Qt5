@@ -31,7 +31,7 @@ QVariantList DataGenerator::genTableData(int rows)
     for (int i = 0; i < rows; i++) {
         /*! 随机成[0-5]个tags */
         QJsonArray tags;
-        auto tagCount = QRandomGenerator::global()->generate() % 5;
+        int tagCount = QRandomGenerator::global()->generate() % 5;
         for (int j = 1; j < tagCount; j++) {
             tags.append(tagList[j]);
         }
@@ -42,6 +42,8 @@ QVariantList DataGenerator::genTableData(int rows)
         object["age"] = qint64(QRandomGenerator::global()->generate() % 20 + 30);
         object["address"] = genString(22);
         object["tags"] = tags;
+        object["action"] = "action";
+
         data.append(object);
     }
 
