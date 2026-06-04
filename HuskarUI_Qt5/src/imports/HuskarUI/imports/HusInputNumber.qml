@@ -7,7 +7,6 @@ Item {
 
     signal activedBefore(index: int, var data)
     signal activedAfter(index: int, var data)
-
     property bool animationEnabled: HusTheme.animationEnabled
     property bool showHandler: true
     property bool alwaysShowHandler: false
@@ -33,8 +32,9 @@ Item {
     property var formatter: value => value.toFixed(precision)
     property var parser: text => Number(text)
     property int defaultHandlerWidth: 24
-    property alias colorText: __input.colorText
     property int radiusBg: HusTheme.HusInput.radiusBg
+    property alias colorText: __input.colorText
+	property alias hovered: __input.hovered
 
     property Component beforeDelegate: HusRectangle {
         enabled: control.enabled
@@ -278,8 +278,10 @@ Item {
             Layout.fillWidth: true
             enabled: control.enabled
             animationEnabled: control.animationEnabled
+			topPadding: 1
+			bottomPadding: 1
             leftPadding: __prefixLoader.active ? __prefixLoader.implicitWidth : 10
-            rightPadding: __handlerLoader.implicitWidth + (__suffixLoader.active ? __suffixLoader.implicitWidth : 10)
+            rightPadding: (__handlerLoader.active ? __handlerLoader.implicitWidth:5) + (__suffixLoader.active ? __suffixLoader.implicitWidth : 5)
             background: HusRectangle {
                 color: __input.colorBg
                 topLeftRadius: control.beforeLabel.length === 0 ? control.radiusBg : 0
@@ -321,7 +323,7 @@ Item {
                 height: parent.height
                 active: control.prefix != ''
                 sourceComponent: HusText {
-                    leftPadding: 10
+                    leftPadding: 5
                     rightPadding: 5
                     text: control.prefix
                     color: __input.colorText
@@ -333,10 +335,10 @@ Item {
                 id: __suffixLoader
                 height: parent.height
                 anchors.right: __handlerLoader.left
-                active: control.suffix != ''
+                active: control.suffix != ''&& !__input.hovered
                 sourceComponent: HusText {
                     leftPadding: 5
-                    rightPadding: 10
+                    rightPadding: 5
                     text: control.suffix
                     color: __input.colorText
                     verticalAlignment: Text.AlignVCenter

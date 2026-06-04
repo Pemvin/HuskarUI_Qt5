@@ -17,6 +17,7 @@ Item {
 
     signal clicked(index: int, radioData: var)
 
+    property int tipsPosition: HusToolTip.Position_Top
     property bool animationEnabled: HusTheme.animationEnabled
     property bool effectEnabled: true
     property int hoverCursorShape: Qt.PointingHandCursor
@@ -39,6 +40,7 @@ Item {
         delay: toolTip.delay ?? 500
         timeout: toolTip.timeout ?? -1
         visible: hovered
+        position: toolTip.position ?? control.tipsPosition
         animationEnabled: control.animationEnabled
     }
     property Component radioDelegate: HusIconButton {
@@ -161,12 +163,14 @@ Item {
 
         Loader {
             x: (parent.width - width) * 0.5
+			
             active: toolTip !== undefined
             sourceComponent: control.toolTipDelegate
             property bool checked: __rootItem.released
             property bool pressed: __rootItem.pressed
             property bool hovered: __rootItem.hovered
             property var toolTip: modelData.toolTip
+			
         }
 
         Connections {

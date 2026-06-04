@@ -37,6 +37,8 @@ HusRectangle {
     property var checkedKeys: []
 
     property color colorGridLine: HusTheme.HusTableView.colorGridLine
+    property color colorCellBg: HusTheme.HusTableView.colorCellBg
+    property color colorAlternatedBg: colorGridLine
 
     property bool columnHeaderVisible: true
     property font columnHeaderTitleFont
@@ -229,7 +231,15 @@ HusRectangle {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onEntered: control.currentHoverRow = row;
+            onReleased: function(mouse) {
+                if (mouse.button === Qt.LeftButton) {
+                    control.rowClicked(row,-1, '');
+                }
+
+            }
             onPressed: control.currentClickRow = row;
+            onExited: control.currentHoverRow = -1;
         }
     }
     property Component columnHeaderSorterIconDelegate: Item {
@@ -915,7 +925,7 @@ HusRectangle {
                     } else {
                         return row == __cellView.currentHoverRow ? HusTheme.HusTableView.colorCellBgHover :
                                                                    control.alternatingRow && __rootItem.row % 2 !== 0 ?
-                                                                       HusTheme.HusTableView.colorCellBgHover : HusTheme.HusTableView.colorCellBg;
+                                                                       control.colorAlternatedBg : control.colorCellBg;
                     }
                 }
 
