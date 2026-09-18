@@ -198,8 +198,12 @@ T.ComboBox {
         Binding on height { value: __popup.implicitHeight }
     }
 
-    HoverHandler {
-        cursorShape: control.hoverCursorShape
+    Item {
+        anchors.fill: parent
+
+        HoverHandler {
+            cursorShape: control.hoverCursorShape
+        }
     }
 
     Accessible.role: Accessible.ComboBox

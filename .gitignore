@@ -104,6 +104,7 @@ build-*/
 *.swp
 *.swo
 *~
+.*/
 
 # Qt
 *.pro.user

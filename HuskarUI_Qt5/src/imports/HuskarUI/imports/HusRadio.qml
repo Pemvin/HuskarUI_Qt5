@@ -106,8 +106,12 @@ T.RadioButton {
     }
     background: Item { }
 
-    HoverHandler {
-        cursorShape: control.hoverCursorShape
+    Item {
+        anchors.fill: parent
+
+        HoverHandler {
+            cursorShape: control.hoverCursorShape
+        }
     }
 
     Accessible.role: Accessible.RadioButton
