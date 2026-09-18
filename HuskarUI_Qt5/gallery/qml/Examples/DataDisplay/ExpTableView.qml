@@ -589,7 +589,7 @@ filterInput | string | 单元格的过滤输入
                 HusPagination {
                     anchors.horizontalCenter: parent.horizontalCenter
                     total: 10
-                    pageSize: 1
+                    pageSize: 10
                     showQuickJumper: true
                     onCurrentPageIndexChanged: {
                         /*! 生成一些数据 */

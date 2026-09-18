@@ -405,6 +405,12 @@ HusRectangle {
         __private.parentCheckState = Qt.Unchecked;
         __private.parentCheckStateChanged();
     }
+
+    function clearCurrentClick() {
+        currentClickRow = -1;
+        currentClickColumn = -1;
+        currentClickKey = '';
+    }
     function scrollToRow(row, visiblePosition = 0) {
         let totalHeight = 0;
         let visibleOffset = 0;
@@ -550,6 +556,7 @@ HusRectangle {
         __private.model.splice(rowIndex, 0, object);
         __cellView.rowHeights.splice(rowIndex, 0, control.defaultRowHeaderHeight);
         __private.updateRowHeader();
+        clearCurrentClick();
     }
 
     function moveRow(fromRowIndex, toRowIndex, count = 1) {
@@ -561,6 +568,7 @@ HusRectangle {
             const heights = __cellView.rowHeights.splice(fromRowIndex, count);
             __cellView.rowHeights.splice(toRowIndex, 0, ...heights);
             __private.updateRowHeader();
+            clearCurrentClick();
         }
     }
 
@@ -570,6 +578,7 @@ HusRectangle {
             __private.model.splice(rowIndex, count);
             __cellView.rowHeights.splice(rowIndex, count);
             __private.updateRowHeader();
+            clearCurrentClick();
         }
     }
 
@@ -687,6 +696,7 @@ HusRectangle {
         }
 
         onModelChanged: {
+            control.clearCurrentClick();
             __cellView.contentY = 0;
             __cellModel.clear();
 
@@ -815,11 +825,24 @@ HusRectangle {
                 id: __rowHeaderModel
                 TableModelColumn { }
             }
-            delegate: Item {
+            delegate: Rectangle {
                 id: __rowHeaderItem
                 implicitWidth: control.defaultRowHeaderWidth
                 implicitHeight: control.defaultRowHeaderHeight
                 clip: true
+                color: {
+                    if (row == control.currentClickRow) {
+                        if (row == __cellView.currentHoverRow)
+                            return HusTheme.isDark ? HusTheme.HusTableView.colorCellBgDarkHoverSelected :
+                                                     HusTheme.HusTableView.colorCellBgHoverSelected;
+                        else
+                            return HusTheme.isDark ? HusTheme.HusTableView.colorCellBgDarkSelected :
+                                                     HusTheme.HusTableView.colorCellBgSelected;
+                    }
+                    return 'transparent';
+                }
+
+                Behavior on color { enabled: control.animationEnabled; ColorAnimation { duration: HusTheme.Primary.durationMid } }
 
                 required property var model
                 property int row: model.row
@@ -915,7 +938,14 @@ HusRectangle {
                 implicitHeight: control.defaultRowHeaderWidth
                 clip: true
                 color: {
-                    if (__private.checkedKeysMap.has(key)) {
+                    if (row == control.currentClickRow) {
+                        if (row == __cellView.currentHoverRow)
+                            return HusTheme.isDark ? HusTheme.HusTableView.colorCellBgDarkHoverSelected :
+                                                     HusTheme.HusTableView.colorCellBgHoverSelected;
+                        else
+                            return HusTheme.isDark ? HusTheme.HusTableView.colorCellBgDarkSelected :
+                                                     HusTheme.HusTableView.colorCellBgSelected;
+                    } else if (__private.checkedKeysMap.has(key)) {
                         if (row == __cellView.currentHoverRow)
                             return HusTheme.isDark ? HusTheme.HusTableView.colorCellBgDarkHoverChecked :
                                                      HusTheme.HusTableView.colorCellBgHoverChecked;
@@ -924,8 +954,8 @@ HusRectangle {
                                                      HusTheme.HusTableView.colorCellBgChecked;
                     } else {
                         return row == __cellView.currentHoverRow ? HusTheme.HusTableView.colorCellBgHover :
-                                                                   control.alternatingRow && __rootItem.row % 2 !== 0 ?
-                                                                       control.colorAlternatedBg : control.colorCellBg;
+                                                                    control.alternatingRow && __rootItem.row % 2 !== 0 ?
+                                                                        control.colorAlternatedBg : control.colorCellBg;
                     }
                 }
 
