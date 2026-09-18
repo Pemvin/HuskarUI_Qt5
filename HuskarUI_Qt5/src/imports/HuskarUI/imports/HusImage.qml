@@ -15,7 +15,7 @@ Image {
     objectName: '__HusImage__'
     onSourceChanged: {
         if (items.length == 0) {
-            __private.previewItems = [{ url: source }];
+            __private.previewItems = [{ url: String(source) }];
         }
     }
     onItemsChanged: {
@@ -35,7 +35,7 @@ Image {
         sourceComponent: Image {
             source: control.fallback
             Component.onCompleted: {
-                __private.previewItems = [{ url: control.fallback }]
+                __private.previewItems = [{ url: String(control.fallback) }]
             }
         }
     }

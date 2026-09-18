@@ -325,6 +325,7 @@ HusPopup {
 
         function initObject(object) {
             if (!object.hasOwnProperty('url')) object.url = '';
+            object.url = String(object.url);
 
             return object;
         }

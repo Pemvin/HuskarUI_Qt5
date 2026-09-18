@@ -307,7 +307,7 @@ Item {
             property bool isCurrent: __private.selectedItem === __rootItem || isCurrentParent
             property bool isCurrentParent: false
             property var layerPopup: null
-
+            visible: model.visible ?? control.visible
             function expandMenu() {
                 if (__menuButton.expandedVisible)
                     __menuButton.expanded = true;
